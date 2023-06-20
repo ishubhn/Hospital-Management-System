@@ -1,0 +1,16 @@
+server:
+  port: 8081
+
+spring:
+  devtools:
+    add-properties: 'true'
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/patient?zeroDateTimeBehavior=convertToNull
+    username: root
+    password: root
+  application:
+    name: Patient-Service
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true

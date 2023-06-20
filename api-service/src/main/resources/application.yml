@@ -1,0 +1,28 @@
+server:
+  port: 8921
+
+spring:
+  application:
+    name: API-Gateway
+  cloud:
+    gateway:
+      routes:
+        - id : HOSPITAL-SERVICE
+          uri: lb://HOSPITAL-SERVICE
+          predicates:
+            - Path=/hospital/**
+
+        - id : PATIENT-SERVICE
+          uri: lb://PATIENT-SERVICE
+          predicates:
+            - Path=/users/**
+
+        - id : PHARMACY-SERVICE
+          uri: lb://PHARMACY-SERVICE
+          predicates:
+            - Path=/pharmacy/**
+
+        - id: FEEDBACK-SERVICE
+          uri: lb://FEEDBACK-SERVICE
+          predicates:
+            - Path=/ratings/**

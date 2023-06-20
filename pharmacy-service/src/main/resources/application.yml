@@ -1,0 +1,97 @@
+server:
+  port: 8281
+
+spring:
+  devtools:
+    add-properties: 'true'
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/pharmacy?zeroDateTimeBehavior=convertToNull
+    username: root
+    password: root
+  application:
+    name: Pharmacy-Service
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: always
+
+# Resilience4j Properties
+resilience4j:
+  # Circuit Breaker
+  circuitbreaker:
+    circuit-breaker-aspect-order: 2
+    instances:
+      ratingMedicineBreakerAll:
+        registerHealthIndicator: true
+        eventConsumerBufferSize: 10
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 6s
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
+
+      ratingMedicineBreakerLikeName:
+        registerHealthIndicator: true
+        eventConsumerBufferSize: 10
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 6s
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
+
+      ratingMedicineBreakerByComposition:
+        registerHealthIndicator: true
+        eventConsumerBufferSize: 10
+        failureRateThreshold: 50
+        minimumNumberOfCalls: 5
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        waitDurationInOpenState: 6s
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowSize: 10
+        slidingWindowType: COUNT_BASED
+
+  retry:
+    retry-aspect-order: 3
+    instances:
+      ratingMedicineRetryAll:
+        max-attempts: 3
+        wait-duration: 2s
+        #       *** reference -> https://refactorfirst.com/spring-cloud-resiliance4j-circuitbreaker-and-retry
+        #        enable-exponential-backoff: true
+        #        exponential-backoff-multiplier: 2
+        #        retry-exceptions:
+        #          - org.springframework.web.client.RestClientException
+        #        ignore-exceptions:
+        #          - io.management.hospital.IgnoreException
+
+      ratingMedicineRetryLikeName:
+        max-attempts: 3
+        wait-duration: 2s
+
+      ratingMedicineRetryByComposition:
+        max-attempts: 3
+        wait-duration: 2s
+
+  ratelimiter:
+    rate-limiter-aspect-order: 1
+    instances:
+      ratingMedicineLimit:
+        limit-refresh-period: 4s
+        limit-for-period: 2
+        timeout-duration: 0s
