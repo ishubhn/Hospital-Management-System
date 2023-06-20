@@ -25,7 +25,7 @@ public class OwnerServiceImpl implements OwnerService {
 	@Autowired
 	private OwnerEntityRepository repo;
 
-	private final String status = "SUCCESS";
+	private String status = "SUCCESS";
 
 	@Override
 	public MessageResponse addOwner(OwnerRequest request) throws NullPointerException{

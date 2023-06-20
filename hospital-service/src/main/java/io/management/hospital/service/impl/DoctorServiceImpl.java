@@ -37,6 +37,7 @@ public class DoctorServiceImpl implements DoctorService {
 				.map(DoctorMapper::toDoctorResponse)
 				.collect(Collectors.toList());
 
+		// get ratings for each doctor and return as response list
 		responseList.forEach(x -> x.setRatings(service.getAllRatingsForDoctor(x.getDoctorId())));
 
 		return responseList;

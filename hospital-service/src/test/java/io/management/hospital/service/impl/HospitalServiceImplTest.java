@@ -8,6 +8,7 @@ import io.management.hospital.entities.dto.response.HospitalResponse;
 import io.management.hospital.entities.dto.response.MessageResponse;
 import io.management.hospital.exception.HospitalAlreadyPresentException;
 import io.management.hospital.exception.NoSuchHospitalExistException;
+import io.management.hospital.external.dto.Ratings;
 import io.management.hospital.repositories.HospitalEntityRepository;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -25,8 +26,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public
-class HospitalServiceImplTest {
+public class HospitalServiceImplTest {
     @Mock
     private HospitalEntityRepository repo;
 
@@ -153,4 +153,5 @@ class HospitalServiceImplTest {
         // Assertion
         assertFalse(result);
     }
+
 }
