@@ -3,6 +3,7 @@ import { AdminDoctorLoginComponent } from "./admin-doctor-login/admin-doctor-log
 import { LoginComponent } from "./login/login.component";
 import { PharmacistLoginComponent } from "./pharmacist-login/pharmacist-login.component";
 import { NgModule } from "@angular/core";
+import { AuthenticationRoutingModule } from "./authentication-routing.module";
 
 @NgModule({
   declarations: [
@@ -11,7 +12,8 @@ import { NgModule } from "@angular/core";
     PharmacistLoginComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    AuthenticationRoutingModule
   ],
   exports: [
     LoginComponent,
