@@ -7,6 +7,7 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { AdminModule } from './admin/admin.module';
 import { UserModule } from './user/user.module';
 import { PharmacyModule } from './pharmacy/pharmacy.module';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { PharmacyModule } from './pharmacy/pharmacy.module';
     AuthenticationModule,
     AdminModule,
     UserModule,
-    PharmacyModule
+    PharmacyModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
