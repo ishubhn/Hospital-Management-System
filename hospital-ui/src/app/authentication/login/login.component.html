@@ -3,9 +3,14 @@
 <section id="login-page">
   <div class="container-fluid">
     <div class="row">
-      <div class="col col-lg-6 message" [@gradientAnimation]="animationState" (mouseenter)="animationState='hovered'" (mouseleave)="animationState='default'">
+      <div
+        class="col col-lg-6 message"
+        [@gradientAnimation]="animationState"
+        (mouseenter)="animationState = 'hovered'"
+        (mouseleave)="animationState = 'default'"
+      >
         <strong>New here?</strong>
-        <p>Let's elevate your healthcare experience </p>
+        <p>Let's elevate your healthcare experience!</p>
         <div class="d-grid col-4 mx-auto">
           <button
             class="btn btn-primary rounded-pill"
@@ -73,6 +78,6 @@
     </div>
   </div>
 </section>
-<footer class="fixed-bottom">
+<!-- <footer class="fixed-bottom">
   <app-footer></app-footer>
-</footer>
+</footer> -->

@@ -10,8 +10,8 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
   styleUrls: ['./login.component.css'],
   animations: [
     trigger('gradientAnimation', [
-      state('default', style({ background: 'linear-gradient(0deg, rgba(2, 0, 36, 1) 0%, rgba(0, 117, 99, 1) 35%, rgba(0, 212, 255, 1) 100%)' })),
-      state('hovered', style({ background: 'linear-gradient(45deg, rgba(2, 0, 36, 1) 0%, rgba(0, 117, 99, 1) 35%, rgba(0, 212, 255, 1) 100%)' })),
+      state('default', style({ background: 'linear-gradient(to top, #30cfd0 0%, #330867 100%)' })),
+      state('hovered', style({ background: 'linear-gradient(to right top, #30cfd0 0%, #330867 100%)' })),
       transition('default <=> hovered', animate('400ms ease-out'))
     ])
   ]

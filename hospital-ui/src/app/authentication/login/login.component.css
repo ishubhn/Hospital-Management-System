@@ -1,14 +1,19 @@
+:root {
+  --primary-color: #005555;
+  --secondary-color: #005555;
+}
+
 input {
     background-color: #00756327;
 }
 
 #login-page {
-    color: #005555;
+    color: var(--primary-color);
 }
 
 #loginBtn {
     color: #ffffff;
-    background-color: #005555;
+    background-color: #275b7e;
     border-color: #ffffff;
 }
 
