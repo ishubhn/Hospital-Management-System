@@ -21,6 +21,7 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
     private JwtUtil jwtUtil;
 
     @Override
@@ -36,7 +37,7 @@ public class AuthServiceImpl implements AuthService {
         user.setLastName(request.getLastName());
         user.setEmailId(request.getEmailId());
         user.setContactNo(request.getContactNo());
-        user.setRoles(request.getRoles());
+        user.setRoles((request.getRoles()));
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
         // Save the users to db

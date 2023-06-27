@@ -34,10 +34,10 @@ public class CustomUserDetailsService implements UserDetailsService {
                 getAuthorities(user.getRoles()));
     }
 
-    private Collection<? extends GrantedAuthority> getAuthorities(List<GrantedAuthority> roles) {
+    private Collection<? extends GrantedAuthority> getAuthorities(List<String> roles) {
         return roles
                 .stream()
-                .map(role -> new SimpleGrantedAuthority(role.getAuthority()))
+                .map(SimpleGrantedAuthority::new)
                 .collect(Collectors.toList());
     }
 }

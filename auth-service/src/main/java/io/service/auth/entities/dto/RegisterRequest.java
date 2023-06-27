@@ -18,6 +18,6 @@ public class RegisterRequest {
     private String emailId;
     private String password;
     private String confirmPassword;
-    private List<GrantedAuthority> roles;
+    private List<String> roles;
     private String contactNo;
 }
