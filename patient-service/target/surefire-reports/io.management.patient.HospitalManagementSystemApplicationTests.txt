@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: io.management.patient.HospitalManagementSystemApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 136.19 s - in io.management.patient.HospitalManagementSystemApplicationTests
