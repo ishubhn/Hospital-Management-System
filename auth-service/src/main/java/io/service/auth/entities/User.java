@@ -7,10 +7,7 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -28,7 +25,12 @@ public class User implements UserDetails {
     private String firstName;
     private String lastName;
     private String password;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "USERS_ROLES", joinColumns = @JoinColumn(name = "users_id"))
+    @Column(name = "roles")
     private List<GrantedAuthority> roles;
+
     private String emailId;
     private String contactNo;
 

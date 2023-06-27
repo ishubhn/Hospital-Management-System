@@ -4,6 +4,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.service.auth.helper.JwtUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -23,8 +24,10 @@ import java.io.IOException;
 @AllArgsConstructor
 @Slf4j
 public class JwtRequestFilter extends OncePerRequestFilter {
-
+    @Autowired
     private final UserDetailsService userDetailsService;
+
+    @Autowired
     private final JwtUtil jwtUtil;
 
     /*
