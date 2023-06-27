@@ -1,0 +1,71 @@
+input {
+    background-color: #00756327;
+}
+
+#login-page {
+    color: #005555;
+}
+
+#loginBtn {
+    color: #ffffff;
+    background-color: #005555;
+    border-color: #ffffff;
+}
+
+#loginBtn:hover {
+    background-color: #ffffff;
+    color: #005555;
+    border-color: #005555;
+}
+
+#signUpBtn {
+    background-color: #ffffff;
+    color: #005555;
+    border-color: #005555;
+}
+
+#signUpBtn:hover {
+    background-color: #005555;
+    color: #ffffff;
+}
+
+.card,
+.headerBody {
+    border: none;
+}
+
+.head {
+    color: #000000;
+    font-weight: 400;
+}
+
+.headerBody {
+    padding: auto;
+    background-color: #ffffff;
+}
+
+.message {
+    /* background-color: #007563c4; */
+    background: rgb(2, 0, 36);
+    /* background: linear-gradient(0deg, rgba(2, 0, 36, 1) 0%, rgba(0, 117, 99, 1) 35%, rgba(0, 212, 255, 1) 100%); */
+    /* transition: background 2s; */
+    color: #ffffff;
+    font-family: 'Mulish', sans-serif;
+    align-self: center;
+    text-align: center;
+    line-height: 4rem;
+    margin: auto;
+    padding: 11.35em 1em;
+}
+
+/* .message.hovered {
+background: rgb(2,0,36);
+background: linear-gradient(153deg, rgba(2,0,36,1) 0%, rgba(0,117,99,1) 35%, rgba(0,212,255,1) 100%);
+} */
+
+.message strong {
+    display: block;
+    font-weight: 900;
+    font-size: 2.5rem;
+    margin: auto;
+}

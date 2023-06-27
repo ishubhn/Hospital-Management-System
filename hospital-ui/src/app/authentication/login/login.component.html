@@ -1,1 +1,78 @@
-<p>login works!</p>
+<app-navbar></app-navbar>
+<!-- Login Page -->
+<section id="login-page">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col col-lg-6 message" [@gradientAnimation]="animationState" (mouseenter)="animationState='hovered'" (mouseleave)="animationState='default'">
+        <strong>New here?</strong>
+        <p>Let's elevate your healthcare experience </p>
+        <div class="d-grid col-4 mx-auto">
+          <button
+            class="btn btn-primary rounded-pill"
+            id="signUpBtn"
+            type="button"
+          >
+            Sign Up
+          </button>
+        </div>
+      </div>
+
+      <div class="col col-lg-6">
+        <!-- Form Start -->
+        <form name="form" #f="ngForm" (ngSubmit)="onSubmit(f)">
+          <div class="m-5 p-5">
+            <div class="card text-center">
+              <div class="text-center card-header headerBody">
+                <h1 class="b-4 display-6"><strong>Please Sign in</strong></h1>
+              </div>
+              <div class="card-body mx-5">
+                <div class="form-floating my-4">
+                  <input
+                    type="email"
+                    class="form-control rounded-pill"
+                    name="username"
+                    id="floatingInput"
+                    placeholder="name@example.com"
+                    ngModel
+                    #username="ngModel"
+                    pattern="^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$"
+                    required
+                    email
+                  />
+                  <label for="floatingInput">Email address</label>
+                </div>
+                <div class="form-floating mb-4">
+                  <input
+                    type="password"
+                    class="form-control rounded-pill"
+                    name="password"
+                    id="floatingPassword"
+                    placeholder="Password"
+                    ngModel
+                    #password="ngModel"
+                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!#%*?&])[A-Za-z\d@$!%*#?&]{8,}$"
+                    required
+                  />
+                  <label for="floatingPassword">Password</label>
+                </div>
+                <div class="d-grid col-5 mx-auto">
+                  <button
+                    class="btn rounded-pill"
+                    id="loginBtn"
+                    type="submit"
+                    [disabled]="!f.valid"
+                  >
+                    <strong>Sign In</strong>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<footer class="fixed-bottom">
+  <app-footer></app-footer>
+</footer>
