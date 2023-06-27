@@ -1,6 +1,27 @@
 server:
   port: 8201
 
+# JWT Mapping keys
+jwt:
+  secret: your_jwt_secret
+  expiration: 1800000
+
+# Database Configuration
+spring:
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/auth?zeroDateTimeBehavior=convertToNull
+    username: root
+    password: root
+  devtools:
+    add-properties: true
+  application:
+    name: Authentication-Service
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+# Eureka client configuration
 eureka:
   instance:
     prefer-ip-address: true

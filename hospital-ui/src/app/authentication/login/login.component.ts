@@ -26,9 +26,4 @@ export class LoginComponent {
 
 	onSubmit(loginForm: NgForm) {}
 
-	// changeGradient() {
-	// 	if(!this.isHovered) {
-	// 		this.isHovered = true;
-	// 	}
-	// }
 }

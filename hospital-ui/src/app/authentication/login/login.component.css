@@ -1,6 +1,6 @@
 :root {
-  --primary-color: #005555;
-  --secondary-color: #005555;
+  --primary-color: #275b7e;
+  --secondary-color: #275b7e;
 }
 
 input {
@@ -19,18 +19,18 @@ input {
 
 #loginBtn:hover {
     background-color: #ffffff;
-    color: #005555;
-    border-color: #005555;
+    color: #275b7e;
+    border-color: #275b7e;
 }
 
 #signUpBtn {
     background-color: #ffffff;
-    color: #005555;
-    border-color: #005555;
+    color: #275b7e;
+    border-color: #275b7e;
 }
 
 #signUpBtn:hover {
-    background-color: #005555;
+    background-color: #275b7e;
     color: #ffffff;
 }
 
