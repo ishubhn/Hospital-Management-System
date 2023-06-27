@@ -10,9 +10,10 @@ Microservice based approach
 - [x] Spring JPA, Rest
 - [x] Feign Client
 - [x] API Gateway
-- [ ] Resillience4j -> Circuit Breaker, Retry, Rate Limitter
+- [x] Resillience4j -> Circuit Breaker, Retry, Rate Limitter
 - [ ] Unit Testing
 - [x] Load Balancer
+- [x] JWT
 - [ ] Okta (Auth)
 - [ ] Kafka
 - [ ] ELK
