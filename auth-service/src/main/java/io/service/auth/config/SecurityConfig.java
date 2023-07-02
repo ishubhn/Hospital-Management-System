@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web
                 .ignoring().antMatchers(HttpMethod.OPTIONS, "/**")
                 .and()
-                .ignoring().antMatchers("/favicon.ico", "/swagger-ui/**", "/v3/api-docs/**");
+                .ignoring().antMatchers("/favicon.ico", "/v3/api-docs/**");
     }
 
     @Override

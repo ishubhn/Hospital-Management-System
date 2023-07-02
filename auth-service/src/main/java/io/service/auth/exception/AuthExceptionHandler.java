@@ -24,4 +24,12 @@ public class AuthExceptionHandler extends ResponseEntityExceptionHandler {
                 request.getDescription(true));
         return new ResponseEntity<>(errorInfo, HttpStatus.UNAUTHORIZED);
     }
+
+    @ExceptionHandler(AuthenticationTokenExpiredException.class)
+    public ResponseEntity<ErrorInfo> handleAuthenticationTokenExpiredException(AuthenticationTokenExpiredException ex,
+                                                                               WebRequest request) {
+        ErrorInfo errorInfo = new ErrorInfo(ex.getMessage(),
+                request.getDescription(true));
+        return new ResponseEntity<>(errorInfo, HttpStatus.UNAUTHORIZED);
+    }
 }
