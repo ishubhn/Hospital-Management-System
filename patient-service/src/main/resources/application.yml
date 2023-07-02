@@ -1,6 +1,10 @@
 server:
   port: 8081
 
+# JWT Mapping keys
+jwt:
+  secret: your_jwt_secret
+
 spring:
   devtools:
     add-properties: 'true'
