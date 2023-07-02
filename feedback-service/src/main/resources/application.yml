@@ -4,6 +4,12 @@ server:
 # JWT Mapping keys
 jwt:
     secret: your_jwt_secret
+    expiration: 1800000
+
+# log files
+logging:
+    file:
+        name: C:/Temp/Logs/HMS/feedback.log
 
 spring:
     datasource:

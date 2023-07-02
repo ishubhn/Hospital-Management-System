@@ -78,7 +78,7 @@ public class DoctorRatingsServiceImpl implements DoctorRatingService {
 		if (ratingEntity.getUserId().equalsIgnoreCase(userId)) {
 			if (ratings >= 1 && ratings <= 5) {
 				ratingEntity.setRatings(ratings);
-
+				log.info("user id matched");
 				doctorRatingsRepo.save(DoctorRatingsMapper.toDoctorRatingsEntity(ratingEntity));
 
 				log.info("Rating is updated successfully for rating id -> {}", ratingId);

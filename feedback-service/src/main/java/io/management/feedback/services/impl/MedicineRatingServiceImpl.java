@@ -28,6 +28,7 @@ public class MedicineRatingServiceImpl implements MedicineRatingService {
 
 	@Override
 	public List<PharmacyRatingsResponse> getAllRatingsForMedicine(String medicineId) {
+		log.info("Inside {}#getAllRatingsForMedicine", className);
 		return pharmacyRatingsRepo
 				.findByMedicineId(medicineId)
 				.stream()
@@ -115,7 +116,7 @@ public class MedicineRatingServiceImpl implements MedicineRatingService {
 		if (ratingEntity.getUserId().equalsIgnoreCase(userId)) {
 			if (feedback.length() < 300) {
 				ratingEntity.setFeedback(feedback);
-
+				log.info("user matched.");
 				pharmacyRatingsRepo.save(PharmacyRatingsMapper.toPharmacyRatingsEntity(ratingEntity));
 
 				log.info("Feedback is updated successfully for rating id -> {}", ratingId);

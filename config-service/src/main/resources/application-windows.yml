@@ -10,7 +10,7 @@ spring:
         git:
           uri: https://github.com/ishubhn/hospital-management-external-config
           clone-on-start: true
-          basedir: /temp/HMS-config
+          basedir: C:\Temp\HMS-config
 
 eureka:
   instance:
