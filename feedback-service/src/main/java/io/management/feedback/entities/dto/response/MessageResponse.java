@@ -1,5 +1,6 @@
 package io.management.feedback.entities.dto.response;
 
+import io.management.feedback.entities.dto.Status;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,5 +21,11 @@ public class MessageResponse {
 		this.timestamp = LocalDateTime.now();
 		this.message = message;
 		this.status = status;
+	}
+
+	public MessageResponse(String message, Status status) {
+		this.timestamp = LocalDateTime.now();
+		this.message = message;
+		this.status = String.valueOf(status);
 	}
 }

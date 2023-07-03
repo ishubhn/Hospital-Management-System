@@ -1,6 +1,7 @@
 package io.management.feedback.services.impl;
 
 import io.management.feedback.entities.DoctorRatingsEntity;
+import io.management.feedback.entities.dto.Status;
 import io.management.feedback.entities.dto.mapper.DoctorRatingsMapper;
 import io.management.feedback.entities.dto.request.DoctorEntityRequest;
 import io.management.feedback.entities.dto.response.DoctorRatingsResponse;
@@ -24,11 +25,11 @@ public class DoctorRatingsServiceImpl implements DoctorRatingService {
 	@Autowired
 	private DoctorRatingsEntityRepository doctorRatingsRepo;
 
-	private String className = "DoctorRatingService";
+	private static final String CLASSNAME = "DoctorRatingService";
 
 	@Override
 	public List<DoctorRatingsResponse> getAllRatingsForDoctor(String doctorId) {
-		log.info("Inside {}#getAllRatingsOfDoctor", className);
+		log.info("Inside {}#getAllRatingsOfDoctor", CLASSNAME);
 
 		return doctorRatingsRepo
 				.findByDoctorId(doctorId)
@@ -39,7 +40,7 @@ public class DoctorRatingsServiceImpl implements DoctorRatingService {
 
 	@Override
 	public List<DoctorRatingsResponse> getAllDoctorsRatingsFromUser(String userId)  throws NoSuchRatingException {
-		log.info("Inside {}#getAllDoctorsRatingsFromUser", className);
+		log.info("Inside {}#getAllDoctorsRatingsFromUser", CLASSNAME);
 		return doctorRatingsRepo.findByUserId(userId)
 				.stream()
 				.map(DoctorRatingsMapper::toDoctorRatingsResponse)
@@ -48,7 +49,7 @@ public class DoctorRatingsServiceImpl implements DoctorRatingService {
 
 	@Override
 	public MessageResponse addRatingToDoctor(DoctorEntityRequest request) {
-		log.info("Inside {}#addRatingToDoctor",className);
+		log.info("Inside {}#addRatingToDoctor", CLASSNAME);
 
 		if (countRatingFromUserForDoctor(request.getDoctorId(), request.getUserId()) != 1) {
 			// User Entity
@@ -60,7 +61,7 @@ public class DoctorRatingsServiceImpl implements DoctorRatingService {
 			doctorRatingsRepo.save(entity);
 			log.info("User {} created successfully", entity.getRatingId());
 
-			return new MessageResponse("Rating added successfully", "SUCCESS");
+			return new MessageResponse("Rating added successfully", String.valueOf(Status.SUCCESS));
 		}
 		else {
 			log.error("Rating already exist by user {} for doctor {}", request.getDoctorId(), request.getUserId());
@@ -71,7 +72,7 @@ public class DoctorRatingsServiceImpl implements DoctorRatingService {
 
 	@Override
 	public MessageResponse updateRatingsForDoctor(int ratings, String ratingId, String userId) {
-		log.info("Inside {}#updateRatingsForDoctor", className);
+		log.info("Inside {}#updateRatingsForDoctor", CLASSNAME);
 		DoctorRatingsResponse ratingEntity = getRatingByRatingId(ratingId);
 		MessageResponse message;
 
@@ -83,23 +84,23 @@ public class DoctorRatingsServiceImpl implements DoctorRatingService {
 
 				log.info("Rating is updated successfully for rating id -> {}", ratingId);
 				message = new MessageResponse(String.format("Rating is updated successfully for rating id -> %s",
-								ratingId), "SUCCESS");
+						ratingId), String.valueOf(Status.SUCCESS));
 			}
 			else {
 				log.error("Unable to update ratings -> {} for ratingId -> {} as rating value is not between 1 to 5",
 						ratings, ratingId);
 				message = new MessageResponse(
-							String.format("Unable to update ratings -> '%s' for ratingId -> '%s' as rating value " +
+						String.format("Unable to update ratings -> '%s' for ratingId -> '%s' as rating value " +
 										"is not between 1 to 5",
-										ratings, ratingId),
-							"ERROR");
+								ratings, ratingId),
+						String.valueOf(Status.ERROR));
 			}
 		}
 		else {
 			message = new MessageResponse(
 					String.format("User id mismatch for rating. Expected user id -> '%s'; Actual user id -> '%s'"
 							, ratingEntity.getUserId(), userId),
-					"ERROR"
+					String.valueOf(Status.ERROR)
 					);
 		}
 
@@ -108,24 +109,24 @@ public class DoctorRatingsServiceImpl implements DoctorRatingService {
 
 	@Override
 	public MessageResponse updateFeedbackForDoctor(String feedback, String ratingId, String userId) {
-		log.info("Inside {}#updateFeedbackForDoctor", className);
+		log.info("Inside {}#updateFeedbackForDoctor", CLASSNAME);
 		DoctorRatingsResponse ratingEntity = getRatingByRatingId(ratingId);
 		MessageResponse message;
 
 		if (ratingEntity.getUserId().equalsIgnoreCase(userId)) {
-			if (!(feedback.length() > 300)) {
+			if (feedback.length() <= 300) {
 				ratingEntity.setFeedback(feedback);
 
 				doctorRatingsRepo.save(DoctorRatingsMapper.toDoctorRatingsEntity(ratingEntity));
 
 				log.info("Feedback is updated successfully for rating id -> {}", ratingId);
 				message = new MessageResponse(String.format("Feedback is updated successfully for rating id -> %s",
-						ratingId), "SUCCESS");
+						ratingId), String.valueOf(Status.SUCCESS));
 			}
 			else {
 				message = new MessageResponse(String.format("An error occurred while updating feedback successfully for " +
 								"rating id -> %s. Please keep length of the feedback below 300 characters",
-						ratingId), "ERROR");
+						ratingId), String.valueOf(Status.ERROR));
 			}
 
 		}
@@ -133,7 +134,7 @@ public class DoctorRatingsServiceImpl implements DoctorRatingService {
 			message = new MessageResponse(
 					String.format("User id mismatch for rating. Expected user id -> '%s'; Actual user id -> '%s'"
 							, ratingEntity.getUserId(), userId),
-					"ERROR"
+					String.valueOf(Status.ERROR)
 			);
 		}
 		return message;
@@ -141,22 +142,22 @@ public class DoctorRatingsServiceImpl implements DoctorRatingService {
 
 	@Override
 	public MessageResponse deleteRatingsForDoctor(String ratingId) {
-		log.info("Inside {}#deleteRatingsForDoctor", className);
+		log.info("Inside {}#deleteRatingsForDoctor", CLASSNAME);
 //		 add condition if exists
 		doctorRatingsRepo.deleteById(ratingId);
 		return new MessageResponse(String.format("Rating deleted successfully for '%s'", ratingId),
-				"SUCCESS");
+				String.valueOf(Status.SUCCESS));
 	}
 
 	@Override
 	public int countRatingFromUserForDoctor(String doctorId, String userId) {
-		log.info("Inside {}#countRatingFromUserForDoctor", className);
+		log.info("Inside {}#countRatingFromUserForDoctor", CLASSNAME);
 		return doctorRatingsRepo.getRatingsCountFromUserForDoctor(doctorId, userId);
 	}
 
 	@Override
 	public DoctorRatingsResponse getRatingByRatingId(String ratingId) {
-		log.info("Inside {}#getRatingByRatingId", className);
+		log.info("Inside {}#getRatingByRatingId", CLASSNAME);
 		return doctorRatingsRepo
 				.findById(ratingId)
 				.stream()

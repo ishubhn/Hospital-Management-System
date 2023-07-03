@@ -119,7 +119,7 @@ public class DoctorServiceImpl implements DoctorService {
 
 		String doctorId = UUID.randomUUID().toString();
 
-		// Generate and set doctor Id
+		// Generate and set doctor ID
 		doctorEntity.setDoctorId(doctorId);
 
 		log.info(doctorEntity.toString());
@@ -136,17 +136,14 @@ public class DoctorServiceImpl implements DoctorService {
 		Optional<DoctorEntity> doctorEntity = Optional.ofNullable(repo.findById(doctorId).orElse(null));
 		Set<String> hospitalsId = null;
 
-		if (!doctorEntity.isEmpty()) {
+		if (doctorEntity.isPresent()) {
 			if (doctorEntity.get().getEducationDetails().isEmpty()) {
 				hospitalsId.add(hospitalId);
 				doctorEntity.get().setHospitalsEnrolledIn(hospitalsId);
 			} else {
 				// some hospital already exist
 				hospitalsId = doctorEntity.get().getHospitalsEnrolledIn();
-
-				if (!hospitalsId.contains(hospitalId)) {
-					hospitalsId.add(hospitalId);
-				}
+				hospitalsId.add(hospitalId);
 			}
 			doctorEntity.get().setHospitalsEnrolledIn(hospitalsId);
 			repo.save(doctorEntity.get());

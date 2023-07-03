@@ -1,6 +1,6 @@
-package io.management.feedback.filter;
+package io.management.patient.filter;
 
-import io.management.feedback.exception.InvalidAuthorizationTokenException;
+import io.management.patient.exception.InvalidAuthorizationTokenException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
@@ -29,11 +29,13 @@ public class TokenInterceptor implements HandlerInterceptor, Ordered {
 
         // Extract the token from the request headers or query parameters
         String token = extractToken(request);
+        log.info(token);
         UserDetails userDetails = getUserDetailsFromToken(token);
-
+        log.info("");
+        log.info("User Details -> {}", userDetails.toString());
         // Validate the token using jwtUtil
         boolean isValidToken = jwtUtil.validateToken(token, userDetails);
-
+        log.info("Is valid token -> {}", isValidToken);
         if (isValidToken) {
             // Allow the request to proceed
             log.info("Valid Token");
@@ -49,6 +51,7 @@ public class TokenInterceptor implements HandlerInterceptor, Ordered {
     private UserDetails getUserDetailsFromToken(String token) {
         log.info("Inside {}#getUserDetailsFromToken", CODENAME);
         String userName = jwtUtil.getUsernameFromToken(token);
+        log.info("Username from token-> {}", userName);
 
         // Load user details by using userDetailsService
         return userDetailsService.loadUserByUsername(userName);
@@ -62,7 +65,6 @@ public class TokenInterceptor implements HandlerInterceptor, Ordered {
         // Check if the Authorization header is present and starts with "Bearer "
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             // extract the token by removing the "Bearer " prefix
-            log.info("Authorization header found. Extracting details");
             return authorizationHeader.substring(7);
         }
 

@@ -1,6 +1,6 @@
-package io.management.feedback.filter;
+package io.management.pharmacy.filter;
 
-import io.management.feedback.exception.InvalidAuthorizationTokenException;
+import io.management.pharmacy.exceptions.InvalidAuthorizationTokenException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
@@ -36,10 +36,10 @@ public class TokenInterceptor implements HandlerInterceptor, Ordered {
 
         if (isValidToken) {
             // Allow the request to proceed
-            log.info("Valid Token");
             return true;
         }
         else {
+            // Todo: to handle exception or error accordingly?
             log.error("Invalid Token");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return false;
@@ -62,7 +62,6 @@ public class TokenInterceptor implements HandlerInterceptor, Ordered {
         // Check if the Authorization header is present and starts with "Bearer "
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
             // extract the token by removing the "Bearer " prefix
-            log.info("Authorization header found. Extracting details");
             return authorizationHeader.substring(7);
         }
 

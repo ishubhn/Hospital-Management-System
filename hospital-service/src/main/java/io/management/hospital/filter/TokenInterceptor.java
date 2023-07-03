@@ -1,6 +1,6 @@
-package io.management.feedback.filter;
+package io.management.hospital.filter;
 
-import io.management.feedback.exception.InvalidAuthorizationTokenException;
+import io.management.hospital.exception.InvalidAuthorizationTokenException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
@@ -36,7 +36,7 @@ public class TokenInterceptor implements HandlerInterceptor, Ordered {
 
         if (isValidToken) {
             // Allow the request to proceed
-            log.info("Valid Token");
+            log.info("Valid token");
             return true;
         }
         else {

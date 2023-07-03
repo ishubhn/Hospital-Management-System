@@ -1,7 +1,7 @@
-package io.management.feedback.filter;
+package io.management.hospital.filter;
 
 import io.jsonwebtoken.*;
-import io.management.feedback.exception.ExpiredTokenException;
+import io.management.hospital.exception.InvalidAuthorizationTokenException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -37,12 +37,12 @@ public class JwtUtil {
         } catch (SignatureException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException ex) {
             throw new BadCredentialsException("INVALID_CREDENTIALS", ex);
         } catch (ExpiredJwtException ex) {
-            throw new ExpiredTokenException("Token has expired");
+            throw new InvalidAuthorizationTokenException("Token has expired");
         }
     }
 
     public String getUsernameFromToken(String token) {
-        log.info("Inside {}getUsernameFromToken#", CODENAME);
+        log.info("Inside {}#getUsernameFromToken", CODENAME);
         Claims claims = Jwts.parser()
                             .setSigningKey(jwtSecret)
                             .parseClaimsJws(token)

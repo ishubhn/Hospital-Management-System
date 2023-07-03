@@ -1,6 +1,8 @@
 package io.service.auth.helper;
 
 import io.jsonwebtoken.*;
+import io.service.auth.exception.ExpiredTokenException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
+@Slf4j
 public class JwtUtil {
     @Value("${jwt.secret}")
     private String jwtSecret;
@@ -28,6 +31,8 @@ public class JwtUtil {
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
+
+        log.info("Token is generated successfully");
 
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
@@ -48,7 +53,7 @@ public class JwtUtil {
         } catch (SignatureException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException ex) {
             throw new BadCredentialsException("INVALID_CREDENTIALS", ex);
         } catch (ExpiredJwtException ex) {
-            throw new Exception("Token has expired");
+            throw new ExpiredTokenException("Token has expired");
         }
     }
 

@@ -3,7 +3,6 @@ package io.management.feedback.services;
 import io.management.feedback.entities.dto.request.DoctorEntityRequest;
 import io.management.feedback.entities.dto.response.DoctorRatingsResponse;
 import io.management.feedback.entities.dto.response.MessageResponse;
-import io.management.feedback.exception.NoSuchRatingException;
 
 import java.util.List;
 

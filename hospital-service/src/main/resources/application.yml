@@ -1,11 +1,6 @@
 server:
   port: 8181
 
-# JWT Mapping keys
-jwt:
-  secret: your_jwt_secret
-  expiration: 1800000
-
 # log files
 logging:
   file:
@@ -24,6 +19,12 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: false
+  data:
+    jdbc:
+      repositories:
+        enabled: false  # Due to Multiple JPA Repositories
+  config:
+    import: optional:configserver:http://localhost:8902
 
 #feign:
 #  client:

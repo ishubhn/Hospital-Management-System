@@ -27,14 +27,23 @@ public class GlobalExceptionHandler {
 				request.getDescription(true));
 
 		return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
-	}
+    }
 
-	@ExceptionHandler(UsernameNotFoundException.class)
-	public ResponseEntity<ErrorMessage> handleNoSuchRatingException(UsernameNotFoundException exception,
-																	WebRequest request) {
-		ErrorMessage errorMessage = new ErrorMessage(LocalDateTime.now(), exception.getMessage(),
-				request.getDescription(true));
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<ErrorMessage> handleUserNotFoundException(UsernameNotFoundException exception,
+                                                                    WebRequest request) {
+        ErrorMessage errorMessage = new ErrorMessage(LocalDateTime.now(), exception.getMessage(),
+                request.getDescription(true));
 
-		return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
-	}
+        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ExpiredTokenException.class)
+    public ResponseEntity<ErrorMessage> handleExpiredTokenException
+            (ExpiredTokenException exception, WebRequest request) {
+        ErrorMessage errorMessage = new ErrorMessage(LocalDateTime.now(), exception.getMessage(),
+                request.getDescription(true));
+
+        return new ResponseEntity<>(errorMessage, HttpStatus.UNAUTHORIZED);
+    }
 }

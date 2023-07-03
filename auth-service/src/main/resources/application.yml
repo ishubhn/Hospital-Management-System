@@ -1,10 +1,10 @@
 server:
   port: 8201
 
-# JWT Mapping keys
-jwt:
-  secret: your_jwt_secret
-  expiration: 1800000
+## JWT Mapping keys
+#jwt:
+#  secret: your_jwt_secret
+#  expiration: 1800000
 
 # Database Configuration
 spring:
@@ -20,6 +20,8 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+  config:
+    import: optional:configserver:http://localhost:8902
 
 # Eureka client configuration
 eureka:

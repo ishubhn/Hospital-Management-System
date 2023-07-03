@@ -1,7 +1,6 @@
-package io.management.feedback.filter;
+package io.management.pharmacy.filter;
 
 import io.jsonwebtoken.*;
-import io.management.feedback.exception.ExpiredTokenException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -37,16 +36,13 @@ public class JwtUtil {
         } catch (SignatureException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException ex) {
             throw new BadCredentialsException("INVALID_CREDENTIALS", ex);
         } catch (ExpiredJwtException ex) {
-            throw new ExpiredTokenException("Token has expired");
+            throw new Exception("Token has expired");
         }
     }
 
     public String getUsernameFromToken(String token) {
         log.info("Inside {}getUsernameFromToken#", CODENAME);
-        Claims claims = Jwts.parser()
-                            .setSigningKey(jwtSecret)
-                            .parseClaimsJws(token)
-                            .getBody();
+        Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
         return claims.getSubject();
     }
 
@@ -69,11 +65,16 @@ public class JwtUtil {
         log.info("Inside {}#isTokenExpiredfilter", CODENAME);
 
         Claims claims = Jwts.parser()
-                            .setSigningKey(jwtSecret)
-                            .parseClaimsJws(token)
-                            .getBody();
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(token)
+                .getBody();
 
         Date expirationDate = claims.getExpiration();
         return expirationDate.before(new Date());
+
+    }
+
+    public Date convertToDate(LocalDateTime localDateTime) {
+        return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
     }
 }

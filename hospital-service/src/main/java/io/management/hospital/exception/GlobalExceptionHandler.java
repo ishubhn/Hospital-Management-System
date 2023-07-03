@@ -61,4 +61,22 @@ public class GlobalExceptionHandler {
 
 		return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
+
+	@ExceptionHandler(InvalidAuthorizationTokenException.class)
+	public ResponseEntity<ErrorMessage> handleInvalidAuthorizationTokenException
+			(InvalidAuthorizationTokenException exception, WebRequest request) {
+		ErrorMessage errorMessage = new ErrorMessage(LocalDateTime.now(), exception.getMessage(),
+				request.getDescription(true));
+
+		return new ResponseEntity<>(errorMessage, HttpStatus.UNAUTHORIZED);
+	}
+
+	@ExceptionHandler(ExpiredTokenException.class)
+	public ResponseEntity<ErrorMessage> handleExpiredTokenException
+			(ExpiredTokenException exception, WebRequest request) {
+		ErrorMessage errorMessage = new ErrorMessage(LocalDateTime.now(), exception.getMessage(),
+				request.getDescription(true));
+
+		return new ResponseEntity<>(errorMessage, HttpStatus.UNAUTHORIZED);
+	}
 }
