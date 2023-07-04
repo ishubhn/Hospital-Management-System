@@ -3,7 +3,6 @@ package io.management.patient.controller;
 import io.management.patient.entity.dto.request.PatientRequest;
 import io.management.patient.entity.dto.response.MessageResponse;
 import io.management.patient.entity.dto.response.PatientResponse;
-import io.management.patient.entity.external.Hospital;
 import io.management.patient.service.impl.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

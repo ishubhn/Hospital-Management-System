@@ -10,10 +10,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Address {
-	private String addressId;
-	private String address;
-	private String city;
-	private String state;
-	private String pinCode;
-	private String country;
+    private String addressId;
+    private String address;
+    private String city;
+    private String state;
+    private String pinCode;
+    private String country;
 }

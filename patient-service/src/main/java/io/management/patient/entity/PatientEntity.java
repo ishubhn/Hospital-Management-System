@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="PATIENT")
+@Table(name = "PATIENT")
 public class PatientEntity {
     @Id
     private String userId;
@@ -29,8 +29,8 @@ public class PatientEntity {
     private AddressEntity address;
 
     public PatientEntity(String firstName, String lastName, String emailId,
-                      String password, String contactNumber, String gender,
-                      LocalDate dateOfBirth, AddressRequest address) {
+                         String password, String contactNumber, String gender,
+                         LocalDate dateOfBirth, AddressRequest address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.emailId = emailId;
