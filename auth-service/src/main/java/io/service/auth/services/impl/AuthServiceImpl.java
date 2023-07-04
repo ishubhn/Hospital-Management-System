@@ -4,7 +4,6 @@ import io.service.auth.entities.User;
 import io.service.auth.entities.dto.LoginRequest;
 import io.service.auth.entities.dto.LoginResponse;
 import io.service.auth.entities.dto.RegisterRequest;
-import io.service.auth.entities.dto.UserResponse;
 import io.service.auth.exception.UserAlreadyExistException;
 import io.service.auth.helper.JwtUtil;
 import io.service.auth.repository.UserRepository;
