@@ -13,19 +13,19 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MessageResponse {
-	private LocalDateTime timestamp;
-	private String message;
-	private String status;
+    private LocalDateTime timestamp;
+    private String message;
+    private String status;
 
-	public MessageResponse(String message, String status) {
-		this.timestamp = LocalDateTime.now();
-		this.message = message;
-		this.status = status;
-	}
+    public MessageResponse(String message, String status) {
+        this.timestamp = LocalDateTime.now();
+        this.message = message;
+        this.status = status;
+    }
 
-	public MessageResponse(String message, Status status) {
-		this.timestamp = LocalDateTime.now();
-		this.message = message;
-		this.status = String.valueOf(status);
-	}
+    public MessageResponse(String message, Status status) {
+        this.timestamp = LocalDateTime.now();
+        this.message = message;
+        this.status = String.valueOf(status);
+    }
 }

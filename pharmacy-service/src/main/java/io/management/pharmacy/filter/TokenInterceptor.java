@@ -15,13 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 @Slf4j
 public class TokenInterceptor implements HandlerInterceptor, Ordered {
+    private static final String CODENAME = "TokenInterceptor";
     @Autowired
     private JwtUtil jwtUtil;
-
     @Autowired
     private UserDetailsService userDetailsService;
-
-    private static final String CODENAME = "TokenInterceptor";
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -37,8 +35,7 @@ public class TokenInterceptor implements HandlerInterceptor, Ordered {
         if (isValidToken) {
             // Allow the request to proceed
             return true;
-        }
-        else {
+        } else {
             // Todo: to handle exception or error accordingly?
             log.error("Invalid Token");
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

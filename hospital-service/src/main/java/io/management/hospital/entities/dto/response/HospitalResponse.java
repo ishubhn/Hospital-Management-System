@@ -9,10 +9,10 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HospitalResponse {
-	private String hospitalId;
-	private String name;
-	private AddressEntity address;
-	private String contactNumber;
-	private String alternateContactNumber;
-	private String emailId;
+    private String hospitalId;
+    private String name;
+    private AddressEntity address;
+    private String contactNumber;
+    private String alternateContactNumber;
+    private String emailId;
 }

@@ -9,12 +9,15 @@ import java.util.List;
 import java.util.Set;
 
 public interface MedicineService {
-	MessageResponse addMedicinesInStock(MedicineRequest medicine);
-	List<MedicineResponse> getAllMedicines();
-	Set<MedicineResponse> getMedicineLikeName(String name);
+    MessageResponse addMedicinesInStock(MedicineRequest medicine);
 
-	MedicineResponse getMedicineById(String medicineId);
+    List<MedicineResponse> getAllMedicines();
 
-	List<MedicineResponse> getMedicineByComposition(String composition);
-	MedicineResponse deactivateMedicines(String medicineId) throws NoSuchMedicineExistException;
+    Set<MedicineResponse> getMedicineLikeName(String name);
+
+    MedicineResponse getMedicineById(String medicineId);
+
+    List<MedicineResponse> getMedicineByComposition(String composition);
+
+    MedicineResponse deactivateMedicines(String medicineId) throws NoSuchMedicineExistException;
 }

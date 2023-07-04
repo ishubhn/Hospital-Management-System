@@ -8,9 +8,7 @@ import io.management.hospital.entities.dto.response.HospitalResponse;
 import io.management.hospital.entities.dto.response.MessageResponse;
 import io.management.hospital.exception.HospitalAlreadyPresentException;
 import io.management.hospital.exception.NoSuchHospitalExistException;
-import io.management.hospital.external.dto.Ratings;
 import io.management.hospital.repositories.HospitalEntityRepository;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,7 +17,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -41,10 +42,10 @@ public class HospitalServiceImplTest {
     @Test
     void getAllHospitals_ShouldReturnListOfHospitals() {
         // Mocking the repository
-        HospitalEntity hospital1 = new HospitalEntity("123","Hospital 1", new AddressEntity("1", "123 Main St", "City1", "State1", "123456", "Country1"), "1234567890", "9876543210",
+        HospitalEntity hospital1 = new HospitalEntity("123", "Hospital 1", new AddressEntity("1", "123 Main St", "City1", "State1", "123456", "Country1"), "1234567890", "9876543210",
                 "hospital1@example.com", "password1");
-        HospitalEntity hospital2 = new HospitalEntity("456","Hospital 2", new AddressEntity("1", "123 Main St", "City1", "State1", "123456", "Country1"), "0987654321", "0123456789",
-                        "hospital2@example.com", "password2");
+        HospitalEntity hospital2 = new HospitalEntity("456", "Hospital 2", new AddressEntity("1", "123 Main St", "City1", "State1", "123456", "Country1"), "0987654321", "0123456789",
+                "hospital2@example.com", "password2");
         List<HospitalEntity> hospitals = Arrays.asList(hospital1, hospital2);
         when(repo.findAll()).thenReturn(hospitals);
 
@@ -61,7 +62,7 @@ public class HospitalServiceImplTest {
     void getHospitalByEmailId_ShouldReturnHospitalResponse() {
         String emailId = "hospital2@example.com";
 
-        HospitalEntity hospital2 = new HospitalEntity("456","Hospital 2", new AddressEntity("1", "123 Main St", "City1", "State1", "123456", "Country1"), "0987654321", "0123456789",
+        HospitalEntity hospital2 = new HospitalEntity("456", "Hospital 2", new AddressEntity("1", "123 Main St", "City1", "State1", "123456", "Country1"), "0987654321", "0123456789",
                 "hospital2@example.com", "password2");
 
         when(repo.findByEmailId(emailId)).thenReturn(Optional.of(hospital2));
@@ -112,7 +113,7 @@ public class HospitalServiceImplTest {
 
         // Act and Assert
         assertThrows(HospitalAlreadyPresentException.class, () ->
-            hospitalService.createHospital(hospitalRequest)
+                hospitalService.createHospital(hospitalRequest)
         );
 
         // Verify that hospitalRepo.save() was not called

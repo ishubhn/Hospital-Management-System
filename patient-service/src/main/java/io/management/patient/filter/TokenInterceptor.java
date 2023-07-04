@@ -11,6 +11,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 
 @Component
 @Slf4j
@@ -32,8 +33,9 @@ public class TokenInterceptor implements HandlerInterceptor, Ordered {
         log.info(token);
         UserDetails userDetails = getUserDetailsFromToken(token);
         log.info("");
-        log.info("User Details -> {}", userDetails.toString());
+//        log.info("User Details -> {}", userDetails.toString());
         // Validate the token using jwtUtil
+
         boolean isValidToken = jwtUtil.validateToken(token, userDetails);
         log.info("Is valid token -> {}", isValidToken);
         if (isValidToken) {
@@ -49,12 +51,18 @@ public class TokenInterceptor implements HandlerInterceptor, Ordered {
     }
 
     private UserDetails getUserDetailsFromToken(String token) {
-        log.info("Inside {}#getUserDetailsFromToken", CODENAME);
-        String userName = jwtUtil.getUsernameFromToken(token);
-        log.info("Username from token-> {}", userName);
+        try {
+            log.info("Inside {}#getUserDetailsFromToken", CODENAME);
+            String userName = jwtUtil.getUsernameFromToken(token);
+            log.info("Username from token-> {}", userName);
 
-        // Load user details by using userDetailsService
-        return userDetailsService.loadUserByUsername(userName);
+            // Load user details by using userDetailsService
+            return userDetailsService.loadUserByUsername(userName);
+        } catch (Exception ex) {
+            log.info(ex.getLocalizedMessage());
+            log.info(Arrays.toString(ex.getStackTrace()));
+            return null;
+        }
     }
 
     private String extractToken(HttpServletRequest request) {

@@ -11,10 +11,10 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DoctorRequest {
-	private String firstName;
-	private String lastName;
-	private String emailId;
-	private String contactNumber;
-	private Map<String, String> educationDetails;
-	private Set<String> hospitalsEnrolledIn;
+    private String firstName;
+    private String lastName;
+    private String emailId;
+    private String contactNumber;
+    private Map<String, String> educationDetails;
+    private Set<String> hospitalsEnrolledIn;
 }

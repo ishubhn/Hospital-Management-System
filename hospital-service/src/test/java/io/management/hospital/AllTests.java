@@ -2,8 +2,7 @@ package io.management.hospital;
 
 import io.management.hospital.service.impl.AddressServiceImplTest;
 import io.management.hospital.service.impl.DoctorServiceImplTest;
-import io.management.hospital.service.impl  .HospitalServiceImplTest;
-
+import io.management.hospital.service.impl.HospitalServiceImplTest;
 import org.junit.platform.runner.JUnitPlatform;
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.SelectPackages;

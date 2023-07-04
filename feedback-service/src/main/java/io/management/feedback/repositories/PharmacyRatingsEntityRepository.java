@@ -9,10 +9,11 @@ import java.util.List;
 
 @Repository
 public interface PharmacyRatingsEntityRepository extends JpaRepository<PharmacyRatingEntity, String> {
-	List<PharmacyRatingEntity> findByMedicineId(String medicineId);
-	List<PharmacyRatingEntity> findByUserId(String userId);
+    List<PharmacyRatingEntity> findByMedicineId(String medicineId);
 
-	@Query(value = "SELECT COUNT(*) FROM pharmacy_ratings WHERE medicine_id= ?1 AND user_id= ?2",
-			nativeQuery = true)
-	int getRatingsCountFromUserForMedicine(String medicineId, String userId);
+    List<PharmacyRatingEntity> findByUserId(String userId);
+
+    @Query(value = "SELECT COUNT(*) FROM pharmacy_ratings WHERE medicine_id= ?1 AND user_id= ?2",
+            nativeQuery = true)
+    int getRatingsCountFromUserForMedicine(String medicineId, String userId);
 }

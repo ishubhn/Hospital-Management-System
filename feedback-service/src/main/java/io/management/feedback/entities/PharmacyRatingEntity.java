@@ -19,20 +19,20 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "PharmacyRatings")
 public class PharmacyRatingEntity {
-	@Id
-	private String ratingsId;
-	private String medicineId;
-	private String userId;  // one who gave the rating
-	@Min(value = 0)
-	@Max(value = 5)
-	private int ratings;
-	@Size(max = 300)
-	private String feedback;
+    @Id
+    private String ratingsId;
+    private String medicineId;
+    private String userId;  // one who gave the rating
+    @Min(value = 0)
+    @Max(value = 5)
+    private int ratings;
+    @Size(max = 300)
+    private String feedback;
 
-	public PharmacyRatingEntity(String medicineId, String userId, int ratings, String feedback) {
-		this.medicineId = medicineId;
-		this.userId = userId;
-		this.ratings = ratings;
-		this.feedback = feedback;
-	}
+    public PharmacyRatingEntity(String medicineId, String userId, int ratings, String feedback) {
+        this.medicineId = medicineId;
+        this.userId = userId;
+        this.ratings = ratings;
+        this.feedback = feedback;
+    }
 }

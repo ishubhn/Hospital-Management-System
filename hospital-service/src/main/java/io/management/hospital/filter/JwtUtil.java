@@ -10,8 +10,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,12 +17,11 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class JwtUtil {
+    private static final String CODENAME = "JwtUtil";
     @Value("${jwt.secret}")
     private String jwtSecret;
     @Value("${jwt.expiration}")
     private long expirationInMs;
-
-    private static final String CODENAME = "JwtUtil";
 
     public boolean validateToken(String token, UserDetails userDetails) throws Exception {
         try {
@@ -44,9 +41,9 @@ public class JwtUtil {
     public String getUsernameFromToken(String token) {
         log.info("Inside {}#getUsernameFromToken", CODENAME);
         Claims claims = Jwts.parser()
-                            .setSigningKey(jwtSecret)
-                            .parseClaimsJws(token)
-                            .getBody();
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(token)
+                .getBody();
         return claims.getSubject();
     }
 
@@ -69,9 +66,9 @@ public class JwtUtil {
         log.info("Inside {}#isTokenExpiredfilter", CODENAME);
 
         Claims claims = Jwts.parser()
-                            .setSigningKey(jwtSecret)
-                            .parseClaimsJws(token)
-                            .getBody();
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(token)
+                .getBody();
 
         Date expirationDate = claims.getExpiration();
         return expirationDate.before(new Date());

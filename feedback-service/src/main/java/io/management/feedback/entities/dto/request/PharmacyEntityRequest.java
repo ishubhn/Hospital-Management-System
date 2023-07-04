@@ -10,8 +10,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PharmacyEntityRequest {
-	private String medicineId;
-	private String userId;  // one who gave the rating
-	private int ratings;
-	private String feedback;
+    private String medicineId;
+    private String userId;  // one who gave the rating
+    private int ratings;
+    private String feedback;
 }

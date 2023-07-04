@@ -22,165 +22,161 @@ import java.util.stream.Collectors;
 @Slf4j
 public class DoctorServiceImpl implements DoctorService {
 
-	@Autowired
-	private DoctorEntityRepository repo;
+    private static final String successStatus = "SUCCESS";
+    @Autowired
+    private DoctorEntityRepository repo;
+    @Autowired
+    private DoctorRatingService service;
 
-	@Autowired
-	private DoctorRatingService service;
+    @Override
+    public List<DoctorResponse> getAllDoctors() {
+        List<DoctorResponse> responseList = repo.findAll()
+                .stream()
+                .map(DoctorMapper::toDoctorResponse)
+                .collect(Collectors.toList());
 
-	private static final String successStatus = "SUCCESS";
+        // get ratings for each doctor and return as response list
+        responseList.forEach(x -> x.setRatings(service.getAllRatingsForDoctor(x.getDoctorId())));
 
-	@Override
-	public List<DoctorResponse> getAllDoctors() {
-		List<DoctorResponse> responseList = repo.findAll()
-				.stream()
-				.map(DoctorMapper::toDoctorResponse)
-				.collect(Collectors.toList());
+        return responseList;
+    }
 
-		// get ratings for each doctor and return as response list
-		responseList.forEach(x -> x.setRatings(service.getAllRatingsForDoctor(x.getDoctorId())));
+    @Override
+    public DoctorResponse getDoctorById(String id) {
 
-		return responseList;
-	}
+        Optional<DoctorResponse> response = repo.findById(id)
+                .stream()
+                .map(DoctorMapper::toDoctorResponse)
+                .findFirst();
 
-	@Override
-	public DoctorResponse getDoctorById(String id) {
+        if (response.isPresent()) {
+            response.get().setRatings(service.getAllRatingsForDoctor(id));
+            return response.get();
+        } else {
+            throw new
+                    NoSuchDoctorEntityException(
+                    String.format("No doctor entity found with id -> %s", id)
+            );
+        }
+    }
 
-		Optional<DoctorResponse> response = repo.findById(id)
-				.stream()
-				.map(DoctorMapper::toDoctorResponse)
-				.findFirst();
+    @Override
+    public DoctorResponse getDoctorByEmailId(String emailId) {
 
-		if (response.isPresent()) {
-			response.get().setRatings(service.getAllRatingsForDoctor(id));
-			return response.get();
-		}
-		else {
-			throw new
-					NoSuchDoctorEntityException(
-								String.format("No doctor entity found with id -> %s", id)
-							);
-		}
-	}
+        Optional<DoctorResponse> response = repo.findByEmailId(emailId)
+                .stream()
+                .map(DoctorMapper::toDoctorResponse)
+                .findFirst();
 
-	@Override
-	public DoctorResponse getDoctorByEmailId(String emailId) {
+        List<Ratings> ratings = service.getAllRatingsForDoctor(response.get().getDoctorId());
 
-		Optional<DoctorResponse> response = repo.findByEmailId(emailId)
-				.stream()
-				.map(DoctorMapper::toDoctorResponse)
-				.findFirst();
+        if (response.isPresent()) {
+            response.get().setRatings(ratings);
+            return response.get();
+        } else {
+            throw new
+                    NoSuchDoctorEntityException(
+                    String.format("No doctor entity found with id -> %s", emailId)
+            );
+        }
 
-		List<Ratings> ratings = service.getAllRatingsForDoctor(response.get().getDoctorId());
+    }
 
-		if (response.isPresent()) {
-			response.get().setRatings(ratings);
-			return response.get();
-		}
-		else {
-			throw new
-					NoSuchDoctorEntityException(
-					String.format("No doctor entity found with id -> %s", emailId)
-			);
-		}
+    @Override
+    public List<DoctorResponse> getDoctorsLikeName(String firstName, String lastName) {
+        List<DoctorResponse> doctorResponse = repo.findByFirstNameOrLastNameContaining(firstName, lastName)
+                .stream()
+                .map(DoctorMapper::toDoctorResponse)
+                .collect(Collectors.toList());
 
-	}
+        doctorResponse.forEach(doctor -> doctor.setRatings(service.getAllRatingsForDoctor(doctor.getDoctorId())));
 
-	@Override
-	public List<DoctorResponse> getDoctorsLikeName(String firstName, String lastName) {
-		List<DoctorResponse> doctorResponse = repo.findByFirstNameOrLastNameContaining(firstName, lastName)
-				.stream()
-				.map(DoctorMapper::toDoctorResponse)
-				.collect(Collectors.toList());
+        if (doctorResponse.isEmpty()) {
+            throw new NoSuchDoctorEntityException(
+                    String.format("No doctor entity found with name -> '%s' or '%s'", firstName, lastName));
+        } else {
+            return doctorResponse;
+        }
+    }
 
-		doctorResponse.forEach(doctor -> doctor.setRatings(service.getAllRatingsForDoctor(doctor.getDoctorId())));
+    @Override
+    public MessageResponse createDoctor(DoctorRequest request) {
+        // education details : degree, specialization, diploma
+        HashMap<String, String> educationDetailsMap = (HashMap<String, String>) request.getEducationDetails();
 
-		if (doctorResponse.isEmpty()) {
-			throw new NoSuchDoctorEntityException(
-					String.format("No doctor entity found with name -> '%s' or '%s'", firstName, lastName));
-		} else {
-			return doctorResponse;
-		}
-	}
+        // in postman faced issue with Content type as 'Plain/text'
+        // issue was resolved when changed to Content-Type: application/json; charset=utf-8
 
-	@Override
-	public MessageResponse createDoctor(DoctorRequest request) {
-		// education details : degree, specialization, diploma
-		HashMap<String, String> educationDetailsMap = (HashMap<String, String>) request.getEducationDetails();
+        // Set
+        HashSet<String> enrolledHospitalSet = (HashSet<String>) request.getHospitalsEnrolledIn(); //id of hospital
 
-		// in postman faced issue with Content type as 'Plain/text'
-		// issue was resolved when changed to Content-Type: application/json; charset=utf-8
+        DoctorEntity doctorEntity = new DoctorEntity(request.getFirstName(), request.getLastName(),
+                request.getEmailId(), request.getContactNumber(), educationDetailsMap, enrolledHospitalSet);
 
-		// Set
-		HashSet<String> enrolledHospitalSet = (HashSet<String>) request.getHospitalsEnrolledIn(); //id of hospital
+        String doctorId = UUID.randomUUID().toString();
 
-		DoctorEntity doctorEntity = new DoctorEntity(request.getFirstName(), request.getLastName(),
-				request.getEmailId(), request.getContactNumber(), educationDetailsMap, enrolledHospitalSet);
+        // Generate and set doctor ID
+        doctorEntity.setDoctorId(doctorId);
 
-		String doctorId = UUID.randomUUID().toString();
+        log.info(doctorEntity.toString());
 
-		// Generate and set doctor ID
-		doctorEntity.setDoctorId(doctorId);
+        // Save
+        repo.save(doctorEntity);
 
-		log.info(doctorEntity.toString());
+        return new MessageResponse(String.format("Doctor entity created successfully -> %s", request.getEmailId()),
+                successStatus);
+    }
 
-		// Save
-		repo.save(doctorEntity);
+    @Override
+    public MessageResponse enrollDoctorToHospital(String doctorId, String hospitalId) throws NullPointerException {
+        Optional<DoctorEntity> doctorEntity = Optional.ofNullable(repo.findById(doctorId).orElse(null));
+        Set<String> hospitalsId = null;
 
-		return new MessageResponse(String.format("Doctor entity created successfully -> %s", request.getEmailId()),
-				successStatus);
-	}
+        if (doctorEntity.isPresent()) {
+            if (doctorEntity.get().getEducationDetails().isEmpty()) {
+                hospitalsId.add(hospitalId);
+                doctorEntity.get().setHospitalsEnrolledIn(hospitalsId);
+            } else {
+                // some hospital already exist
+                hospitalsId = doctorEntity.get().getHospitalsEnrolledIn();
+                hospitalsId.add(hospitalId);
+            }
+            doctorEntity.get().setHospitalsEnrolledIn(hospitalsId);
+            repo.save(doctorEntity.get());
+        }
+        return new MessageResponse(String.format("Doctor -> '%s' enrolled in Hospital -> '%s' successfully",
+                doctorId, hospitalId),
+                successStatus);
+    }
 
-	@Override
-	public MessageResponse enrollDoctorToHospital(String doctorId, String hospitalId) throws NullPointerException {
-		Optional<DoctorEntity> doctorEntity = Optional.ofNullable(repo.findById(doctorId).orElse(null));
-		Set<String> hospitalsId = null;
+    @Override
+    public MessageResponse addDoctorQualification(String doctorId, String degree, String specializationField) {
+        Optional<DoctorEntity> doctorEntity = repo.findById(doctorId);
 
-		if (doctorEntity.isPresent()) {
-			if (doctorEntity.get().getEducationDetails().isEmpty()) {
-				hospitalsId.add(hospitalId);
-				doctorEntity.get().setHospitalsEnrolledIn(hospitalsId);
-			} else {
-				// some hospital already exist
-				hospitalsId = doctorEntity.get().getHospitalsEnrolledIn();
-				hospitalsId.add(hospitalId);
-			}
-			doctorEntity.get().setHospitalsEnrolledIn(hospitalsId);
-			repo.save(doctorEntity.get());
-		}
-		return new MessageResponse(String.format("Doctor -> '%s' enrolled in Hospital -> '%s' successfully",
-				doctorId, hospitalId),
-				successStatus);
-	}
+        if (doctorEntity.isPresent()) {
+            Map<String, String> qualificationsMap = doctorEntity.get().getEducationDetails();
 
-	@Override
-	public MessageResponse addDoctorQualification(String doctorId, String degree, String specializationField) {
-		Optional<DoctorEntity> doctorEntity = repo.findById(doctorId);
+            if (qualificationsMap.isEmpty()) {
+                qualificationsMap.put(degree, specializationField);
+                doctorEntity.get().setEducationDetails(qualificationsMap);
+            } else {
+                if (!qualificationsMap.containsValue(specializationField)) {
+                    qualificationsMap.put(degree, specializationField);
+                    doctorEntity.get().setEducationDetails(qualificationsMap);
+                }
+            }
 
-		if (doctorEntity.isPresent()) {
-			Map<String, String> qualificationsMap = doctorEntity.get().getEducationDetails();
+            repo.save(doctorEntity.get());
+        }
+        return new MessageResponse(String.format("Qualification -> ('%s' -> '%s') registered for Doctor -> '%s'" +
+                        " successfully",
+                degree, specializationField, doctorId), successStatus);
+    }
 
-			if (qualificationsMap.isEmpty()) {
-				qualificationsMap.put(degree, specializationField);
-				doctorEntity.get().setEducationDetails(qualificationsMap);
-			} else {
-				if (!qualificationsMap.containsValue(specializationField)) {
-					qualificationsMap.put(degree, specializationField);
-					doctorEntity.get().setEducationDetails(qualificationsMap);
-				}
-			}
-
-			repo.save(doctorEntity.get());
-		}
-		return new MessageResponse(String.format("Qualification -> ('%s' -> '%s') registered for Doctor -> '%s'" +
-						" successfully",
-				degree, specializationField, doctorId), successStatus);
-	}
-
-	@Override
-	@Transactional
-	public MessageResponse deleteDoctor(String doctorId) {
-		repo.deleteById(doctorId);
-		return new MessageResponse(String.format("Doctor entity with id -> %s is deleted", doctorId), successStatus);
-	}
+    @Override
+    @Transactional
+    public MessageResponse deleteDoctor(String doctorId) {
+        repo.deleteById(doctorId);
+        return new MessageResponse(String.format("Doctor entity with id -> %s is deleted", doctorId), successStatus);
+    }
 }

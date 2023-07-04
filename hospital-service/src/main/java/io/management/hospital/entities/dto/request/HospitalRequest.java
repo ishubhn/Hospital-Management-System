@@ -8,10 +8,10 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HospitalRequest {
-	private String name;
-	private AddressRequest address;
-	private String contactNumber;
-	private String alternateContactNumber;
-	private String emailId;
-	private String password;
+    private String name;
+    private AddressRequest address;
+    private String contactNumber;
+    private String alternateContactNumber;
+    private String emailId;
+    private String password;
 }

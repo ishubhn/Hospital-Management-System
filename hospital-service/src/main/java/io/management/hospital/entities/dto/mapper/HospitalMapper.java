@@ -8,19 +8,19 @@ import static io.management.hospital.entities.dto.mapper.AddressMapper.toAddress
 
 public class HospitalMapper {
 
-	public static HospitalEntity toHospitalEntity(HospitalRequest request) {    //convert address
-		// entity to address request
-		return new HospitalEntity(request.getName(), toAddressEntity(request.getAddress()),
-				request.getContactNumber(), request.getAlternateContactNumber(),
-				request.getEmailId(), request.getPassword());
-	}
+    private HospitalMapper() {
+    }
 
-	public static HospitalResponse toHospitalResponse(HospitalEntity entity) {
-		return new HospitalResponse(entity.getHospitalId(), entity.getName(),
-				entity.getAddress(), entity.getContactNumber(), entity.getAlternateContactNumber(),
-				entity.getEmailId());
-	}
+    public static HospitalEntity toHospitalEntity(HospitalRequest request) {    //convert address
+        // entity to address request
+        return new HospitalEntity(request.getName(), toAddressEntity(request.getAddress()),
+                request.getContactNumber(), request.getAlternateContactNumber(),
+                request.getEmailId(), request.getPassword());
+    }
 
-	private HospitalMapper() {
-	}
+    public static HospitalResponse toHospitalResponse(HospitalEntity entity) {
+        return new HospitalResponse(entity.getHospitalId(), entity.getName(),
+                entity.getAddress(), entity.getContactNumber(), entity.getAlternateContactNumber(),
+                entity.getEmailId());
+    }
 }

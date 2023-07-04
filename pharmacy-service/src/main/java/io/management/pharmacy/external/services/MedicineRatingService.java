@@ -9,6 +9,6 @@ import java.util.List;
 
 @FeignClient(name = "FEEDBACK-SERVICE")
 public interface MedicineRatingService {
-	@GetMapping("/ratings/pharmacy/{medicineId}")
-	List<Ratings> getAllRatingsForMedicine(@PathVariable String medicineId);
+    @GetMapping("/ratings/pharmacy/{medicineId}")
+    List<Ratings> getAllRatingsForMedicine(@PathVariable String medicineId);
 }

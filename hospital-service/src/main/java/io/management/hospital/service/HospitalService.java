@@ -8,8 +8,11 @@ import io.management.hospital.exception.HospitalAlreadyPresentException;
 import java.util.List;
 
 public interface HospitalService {
-	List<HospitalResponse> getAllHospitals();
-	HospitalResponse getHospitalByEmailId(String emailId);
-	MessageResponse createHospital(HospitalRequest hospital) throws HospitalAlreadyPresentException;
-	MessageResponse deleteHospitalByEmailId(String emailId);
+    List<HospitalResponse> getAllHospitals();
+
+    HospitalResponse getHospitalByEmailId(String emailId);
+
+    MessageResponse createHospital(HospitalRequest hospital) throws HospitalAlreadyPresentException;
+
+    MessageResponse deleteHospitalByEmailId(String emailId);
 }

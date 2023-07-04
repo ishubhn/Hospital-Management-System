@@ -11,16 +11,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class AddressServiceImpl	implements AddressService {
+public class AddressServiceImpl implements AddressService {
 
-	@Autowired
-	private HospitalEntityRepository repo;
+    @Autowired
+    private HospitalEntityRepository repo;
 
-	@Override
-	public List<HospitalResponse> getHospitalsByPincode(String pincode) {
-		return repo.findByPincode(pincode)
-				.stream()
-				.map(HospitalMapper::toHospitalResponse)
-				.collect(Collectors.toList());
-	}
+    @Override
+    public List<HospitalResponse> getHospitalsByPincode(String pincode) {
+        return repo.findByPincode(pincode)
+                .stream()
+                .map(HospitalMapper::toHospitalResponse)
+                .collect(Collectors.toList());
+    }
 }

@@ -18,12 +18,11 @@ import java.util.stream.Collectors;
 @Component
 @Slf4j
 public class JwtUtil {
+    private static final String CODENAME = "JwtUtil";
     @Value("${jwt.secret}")
     private String jwtSecret;
     @Value("${jwt.expiration}")
     private long expirationInMs;
-
-    private static final String CODENAME = "JwtUtil";
 
     public boolean validateToken(String token, UserDetails userDetails) throws Exception {
         try {

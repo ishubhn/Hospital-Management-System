@@ -102,13 +102,13 @@ resilience4j:
       ratingDoctorRetryAll:
         max-attempts: 3
         wait-duration: 2s
-#       *** reference -> https://refactorfirst.com/spring-cloud-resiliance4j-circuitbreaker-and-retry
-#        enable-exponential-backoff: true
-#        exponential-backoff-multiplier: 2
-#        retry-exceptions:
-#          - org.springframework.web.client.RestClientException
-#        ignore-exceptions:
-#          - io.management.hospital.IgnoreException
+      #       *** reference -> https://refactorfirst.com/spring-cloud-resiliance4j-circuitbreaker-and-retry
+      #        enable-exponential-backoff: true
+      #        exponential-backoff-multiplier: 2
+      #        retry-exceptions:
+      #          - org.springframework.web.client.RestClientException
+      #        ignore-exceptions:
+      #          - io.management.hospital.IgnoreException
 
       ratingDoctorRetryById:
         max-attempts: 3

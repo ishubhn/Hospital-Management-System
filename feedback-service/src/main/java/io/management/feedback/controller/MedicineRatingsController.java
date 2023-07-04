@@ -16,38 +16,38 @@ import java.util.List;
 @RequestMapping("/ratings/pharmacy")
 public class MedicineRatingsController {
 
-	@Autowired
-	MedicineRatingService service;
+    @Autowired
+    MedicineRatingService service;
 
-	@GetMapping("/{medicineId}")
-	public ResponseEntity<List<PharmacyRatingsResponse>> getAllRatingsForMedicine(@PathVariable String medicineId) {
-		return new ResponseEntity<>(service.getAllRatingsForMedicine(medicineId), HttpStatus.OK);
-	}
+    @GetMapping("/{medicineId}")
+    public ResponseEntity<List<PharmacyRatingsResponse>> getAllRatingsForMedicine(@PathVariable String medicineId) {
+        return new ResponseEntity<>(service.getAllRatingsForMedicine(medicineId), HttpStatus.OK);
+    }
 
-	@GetMapping("/user/{userId}")
-	public ResponseEntity<List<PharmacyRatingsResponse>> getAllMedicineRatingsFromUser(@PathVariable String userId) {
-		return new ResponseEntity<>(service.getAllMedicineRatingsFromUser(userId), HttpStatus.OK);
-	}
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<PharmacyRatingsResponse>> getAllMedicineRatingsFromUser(@PathVariable String userId) {
+        return new ResponseEntity<>(service.getAllMedicineRatingsFromUser(userId), HttpStatus.OK);
+    }
 
-	@PostMapping
-	public ResponseEntity<MessageResponse> createNewMedicineRatings(@RequestBody PharmacyEntityRequest request) {
-		return new ResponseEntity<>(service.addRatingToMedicines(request), HttpStatus.OK);
-	}
+    @PostMapping
+    public ResponseEntity<MessageResponse> createNewMedicineRatings(@RequestBody PharmacyEntityRequest request) {
+        return new ResponseEntity<>(service.addRatingToMedicines(request), HttpStatus.OK);
+    }
 
-	@PutMapping("/ratings")
-	public ResponseEntity<MessageResponse> updateRatingsForMedicine(@RequestBody UpdateRatingRequest request) {
-		return ResponseEntity.ok(service.updateRatingsForMedicine(request.getRatings(), request.getRatingId(),
-				request.getUserId()));
-	}
+    @PutMapping("/ratings")
+    public ResponseEntity<MessageResponse> updateRatingsForMedicine(@RequestBody UpdateRatingRequest request) {
+        return ResponseEntity.ok(service.updateRatingsForMedicine(request.getRatings(), request.getRatingId(),
+                request.getUserId()));
+    }
 
-	@PutMapping("/feedback")
-	public ResponseEntity<MessageResponse> updateFeedbackForMedicine(@RequestBody UpdateRatingRequest request) {
-		return ResponseEntity.ok(
-				service.updateFeedbackForMedicine(request.getFeedback(), request.getRatingId(), request.getUserId()));
-	}
+    @PutMapping("/feedback")
+    public ResponseEntity<MessageResponse> updateFeedbackForMedicine(@RequestBody UpdateRatingRequest request) {
+        return ResponseEntity.ok(
+                service.updateFeedbackForMedicine(request.getFeedback(), request.getRatingId(), request.getUserId()));
+    }
 
-	@DeleteMapping("/{ratingId}")
-	public ResponseEntity<MessageResponse> deleteRatingById(@PathVariable String ratingId) {
-		return new ResponseEntity<>(service.deleteRatingsForMedicine(ratingId), HttpStatus.OK);
-	}
+    @DeleteMapping("/{ratingId}")
+    public ResponseEntity<MessageResponse> deleteRatingById(@PathVariable String ratingId) {
+        return new ResponseEntity<>(service.deleteRatingsForMedicine(ratingId), HttpStatus.OK);
+    }
 }

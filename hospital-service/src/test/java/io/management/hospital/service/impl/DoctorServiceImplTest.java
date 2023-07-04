@@ -16,7 +16,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -32,23 +33,23 @@ public class DoctorServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.openMocks( this);
+        MockitoAnnotations.openMocks(this);
     }
 
     @Test
     void getAllDoctors_ShouldReturnDoctorResponseList() {
         // Mock the repo response
         Map<String, String> eduMap = new HashMap<>();
-        eduMap.put("abc","123");
-        eduMap.put("xyz","456");
+        eduMap.put("abc", "123");
+        eduMap.put("xyz", "456");
 
         Set<String> hospitals = new HashSet<>();
         hospitals.add("hospital 1");
         hospitals.add("hospital 2");
 
-        DoctorEntity doctor1 = new DoctorEntity("1","John", "Doe",
+        DoctorEntity doctor1 = new DoctorEntity("1", "John", "Doe",
                 "example@email.com", "1234567891", eduMap, hospitals);
-        DoctorEntity doctor2 = new DoctorEntity("2","Jane", "Smith",
+        DoctorEntity doctor2 = new DoctorEntity("2", "Jane", "Smith",
                 "example@email.com", "1239577891", eduMap, hospitals);
         List<DoctorEntity> mockDoctors = Arrays.asList(doctor1, doctor2);
 
@@ -94,7 +95,7 @@ public class DoctorServiceImplTest {
 
     @Test
     void getDoctorById_DoctorExist_ShouldReturnDoctorResponse() {
-        DoctorEntity mockDoctor = new DoctorEntity("1","John", "Doe",
+        DoctorEntity mockDoctor = new DoctorEntity("1", "John", "Doe",
                 "example@email.com", "1234567891", null, null);
         when(repo.findById("1")).thenReturn(Optional.of(mockDoctor));
 
@@ -111,7 +112,7 @@ public class DoctorServiceImplTest {
         //Assertions
         assertEquals("1", doctorResponse.getDoctorId());
         assertEquals("John", doctorResponse.getFirstName());
-        assertEquals(createMockRatings("1"),doctorResponse.getRatings());
+        assertEquals(createMockRatings("1"), doctorResponse.getRatings());
     }
 
     @Test

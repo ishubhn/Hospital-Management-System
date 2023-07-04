@@ -16,39 +16,39 @@ import java.util.List;
 @RequestMapping("/ratings/doctor")
 public class DoctorRatingsController {
 
-	@Autowired
-	DoctorRatingService service;
+    @Autowired
+    DoctorRatingService service;
 
-	@GetMapping("/{doctorId}")
-	public ResponseEntity<List<DoctorRatingsResponse>> getAllRatingsForDoctor(@PathVariable String doctorId) {
-		return new ResponseEntity<>(service.getAllRatingsForDoctor(doctorId), HttpStatus.OK);
-	}
+    @GetMapping("/{doctorId}")
+    public ResponseEntity<List<DoctorRatingsResponse>> getAllRatingsForDoctor(@PathVariable String doctorId) {
+        return new ResponseEntity<>(service.getAllRatingsForDoctor(doctorId), HttpStatus.OK);
+    }
 
-	@GetMapping("/user/{userId}")
-	public ResponseEntity<List<DoctorRatingsResponse>> getAllDoctorsRatingsFromUser(@PathVariable String userId) {
-		return new ResponseEntity<>(service.getAllDoctorsRatingsFromUser(userId), HttpStatus.OK);
-	}
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<DoctorRatingsResponse>> getAllDoctorsRatingsFromUser(@PathVariable String userId) {
+        return new ResponseEntity<>(service.getAllDoctorsRatingsFromUser(userId), HttpStatus.OK);
+    }
 
-	@PostMapping
-	public ResponseEntity<MessageResponse> createNewDoctorRating(@RequestBody DoctorEntityRequest request) {
-		return new ResponseEntity<>(service.addRatingToDoctor(request), HttpStatus.CREATED);
-	}
+    @PostMapping
+    public ResponseEntity<MessageResponse> createNewDoctorRating(@RequestBody DoctorEntityRequest request) {
+        return new ResponseEntity<>(service.addRatingToDoctor(request), HttpStatus.CREATED);
+    }
 
-	@PutMapping("/ratings")
-	public ResponseEntity<MessageResponse> updateRatingsForDoctor(@RequestBody UpdateRatingRequest request) {
-		return new ResponseEntity<>(
-				service.updateRatingsForDoctor(request.getRatings(), request.getRatingId(),request.getUserId()),
-				HttpStatus.ACCEPTED);
-	}
+    @PutMapping("/ratings")
+    public ResponseEntity<MessageResponse> updateRatingsForDoctor(@RequestBody UpdateRatingRequest request) {
+        return new ResponseEntity<>(
+                service.updateRatingsForDoctor(request.getRatings(), request.getRatingId(), request.getUserId()),
+                HttpStatus.ACCEPTED);
+    }
 
-	@PutMapping("/feedback")
-	public ResponseEntity<MessageResponse> updateFeedbackForDoctor(@RequestBody UpdateRatingRequest request) {
-		return new ResponseEntity<>(service.updateFeedbackForDoctor(request.getFeedback(), request.getRatingId(),
-				request.getUserId()), HttpStatus.ACCEPTED);
-	}
+    @PutMapping("/feedback")
+    public ResponseEntity<MessageResponse> updateFeedbackForDoctor(@RequestBody UpdateRatingRequest request) {
+        return new ResponseEntity<>(service.updateFeedbackForDoctor(request.getFeedback(), request.getRatingId(),
+                request.getUserId()), HttpStatus.ACCEPTED);
+    }
 
-	@DeleteMapping("/{ratingId}")
-	public ResponseEntity<MessageResponse> deleteRatingById(@PathVariable String ratingId) {
-		return new ResponseEntity<>(service.deleteRatingsForDoctor(ratingId), HttpStatus.OK);
-	}
+    @DeleteMapping("/{ratingId}")
+    public ResponseEntity<MessageResponse> deleteRatingById(@PathVariable String ratingId) {
+        return new ResponseEntity<>(service.deleteRatingsForDoctor(ratingId), HttpStatus.OK);
+    }
 }
