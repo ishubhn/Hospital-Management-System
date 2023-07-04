@@ -35,9 +35,9 @@ public class AuthExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorInfo, HttpStatus.UNAUTHORIZED);
     }
 
-    @ExceptionHandler(ExpiredTokenException.class)
-    public ResponseEntity<ErrorInfo> handleExpiredTokenException
-            (ExpiredTokenException exception, WebRequest request) {
+    @ExceptionHandler(InvalidTokenException.class)
+    public ResponseEntity<ErrorInfo> handleInvalidTokenException
+            (InvalidTokenException exception, WebRequest request) {
         ErrorInfo errorMessage = new ErrorInfo(LocalDateTime.now(), exception.getMessage(),
                 request.getDescription(true));
 

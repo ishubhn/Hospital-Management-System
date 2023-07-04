@@ -1,11 +1,6 @@
 server:
   port: 8201
 
-## JWT Mapping keys
-#jwt:
-#  secret: your_jwt_secret
-#  expiration: 1800000
-
 # Database Configuration
 spring:
   datasource:
@@ -15,7 +10,7 @@ spring:
   devtools:
     add-properties: true
   application:
-    name: Authentication-Service
+    name: AUTHENTICATION-SERVICE
   jpa:
     hibernate:
       ddl-auto: update

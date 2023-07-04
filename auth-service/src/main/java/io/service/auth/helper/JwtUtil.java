@@ -1,7 +1,7 @@
 package io.service.auth.helper;
 
 import io.jsonwebtoken.*;
-import io.service.auth.exception.ExpiredTokenException;
+import io.service.auth.exception.AuthenticationTokenExpiredException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -24,7 +24,10 @@ public class JwtUtil {
     @Value("${jwt.expiration}")
     private long expirationInMs;
 
+    public static final String CLASSNAME = "JWTUtil";
+
     public String generateToken(UserDetails userDetails) {
+        log.info("Inside {}#generateToken", CLASSNAME);
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime expiryDate = now.plusSeconds(expirationInMs / 1000);
 
@@ -45,15 +48,19 @@ public class JwtUtil {
 
     public boolean validateToken(String token, UserDetails userDetails) throws Exception {
         try {
+            log.info("Inside {}#validateToken", CLASSNAME);
             Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
             String username = claims.getSubject();
+            log.info("Username extracted from token -> {}", username);
+            log.info("Is token valid -> " + (username.equalsIgnoreCase(userDetails.getUsername()) &&
+                    isTokenExpired(token)));
 
             return (username.equalsIgnoreCase(userDetails.getUsername()) &&
-                    !isTokenExpired(token));
+                    isTokenExpired(token));
         } catch (SignatureException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException ex) {
             throw new BadCredentialsException("INVALID_CREDENTIALS", ex);
         } catch (ExpiredJwtException ex) {
-            throw new ExpiredTokenException("Token has expired");
+            throw new AuthenticationTokenExpiredException("Token has expired");
         }
     }
 
@@ -82,8 +89,7 @@ public class JwtUtil {
                 .getBody();
 
         Date expirationDate = claims.getExpiration();
-        return expirationDate.before(new Date());
-
+        return !expirationDate.before(new Date());
     }
 
     public Date convertToDate(LocalDateTime localDateTime) {
