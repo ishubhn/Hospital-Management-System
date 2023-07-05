@@ -1,6 +1,7 @@
 package io.management.patient.filter;
 
 import io.jsonwebtoken.*;
+import io.management.patient.exception.ExpiredTokenException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -35,7 +36,7 @@ public class JwtUtil {
         } catch (SignatureException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException ex) {
             throw new BadCredentialsException("INVALID_CREDENTIALS", ex);
         } catch (ExpiredJwtException ex) {
-            throw new Exception("Token has expired");
+            throw new ExpiredTokenException("Token has expired");
         }
     }
 
@@ -70,7 +71,6 @@ public class JwtUtil {
 
         Date expirationDate = claims.getExpiration();
         return expirationDate.before(new Date());
-
     }
 
     public Date convertToDate(LocalDateTime localDateTime) {

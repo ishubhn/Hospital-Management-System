@@ -1,11 +1,12 @@
 package io.management.patient.filter;
 
 import io.management.patient.exception.InvalidAuthorizationTokenException;
+import io.management.patient.exception.UserNotFoundException;
+import io.management.patient.service.impl.UserDetailsServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.Ordered;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -19,8 +20,9 @@ public class TokenInterceptor implements HandlerInterceptor, Ordered {
     private static final String CODENAME = "TokenInterceptor";
     @Autowired
     private JwtUtil jwtUtil;
+
     @Autowired
-    private UserDetailsService userDetailsService;
+    private UserDetailsServiceImpl userDetailsService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -31,7 +33,7 @@ public class TokenInterceptor implements HandlerInterceptor, Ordered {
         log.info(token);
         UserDetails userDetails = getUserDetailsFromToken(token);
         log.info("");
-//        log.info("User Details -> {}", userDetails.toString());
+
         // Validate the token using jwtUtil
 
         boolean isValidToken = jwtUtil.validateToken(token, userDetails);
@@ -51,14 +53,15 @@ public class TokenInterceptor implements HandlerInterceptor, Ordered {
         try {
             log.info("Inside {}#getUserDetailsFromToken", CODENAME);
             String userName = jwtUtil.getUsernameFromToken(token);
+
             log.info("Username from token-> {}", userName);
 
             // Load user details by using userDetailsService
-            return userDetailsService.loadUserByUsername(userName);
+            return userDetailsService.loadUserByUsername(token, userName);
         } catch (Exception ex) {
             log.info(ex.getLocalizedMessage());
             log.info(Arrays.toString(ex.getStackTrace()));
-            return null;
+            throw new UserNotFoundException("User not found exception", ex);
         }
     }
 
