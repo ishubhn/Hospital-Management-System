@@ -18,11 +18,14 @@ import java.util.Arrays;
 @Slf4j
 public class TokenInterceptor implements HandlerInterceptor, Ordered {
     private static final String CODENAME = "TokenInterceptor";
-    @Autowired
-    private JwtUtil jwtUtil;
+    private final JwtUtil jwtUtil;
+    private final UserDetailsServiceImpl userDetailsService;
 
     @Autowired
-    private UserDetailsServiceImpl userDetailsService;
+    public TokenInterceptor(JwtUtil jwtUtil, UserDetailsServiceImpl userDetailsService) {
+        this.jwtUtil = jwtUtil;
+        this.userDetailsService = userDetailsService;
+    }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -35,9 +38,9 @@ public class TokenInterceptor implements HandlerInterceptor, Ordered {
         log.info("");
 
         // Validate the token using jwtUtil
-
         boolean isValidToken = jwtUtil.validateToken(token, userDetails);
         log.info("Is valid token -> {}", isValidToken);
+
         if (isValidToken) {
             // Allow the request to proceed
             log.info("Valid Token");

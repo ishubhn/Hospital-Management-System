@@ -14,7 +14,7 @@ spring:
   devtools:
     add-properties: true
   application:
-    name: Feedback-Service
+    name: FEEDBACK-SERVICE
   jpa:
     hibernate:
       ddl-auto: update

@@ -14,7 +14,7 @@ spring:
   devtools:
     add-properties: true
   application:
-    name: Hospital-Service
+    name: HOSPITAL-SERVICE
   jpa:
     hibernate:
       ddl-auto: update

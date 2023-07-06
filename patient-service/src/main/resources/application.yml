@@ -14,7 +14,7 @@ spring:
     username: root
     password: root
   application:
-    name: Patient-Service
+    name: PATIENT-SERVICE
   jpa:
     hibernate:
       ddl-auto: update
