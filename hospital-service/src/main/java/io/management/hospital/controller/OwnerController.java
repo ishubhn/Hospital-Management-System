@@ -13,26 +13,26 @@ import java.util.List;
 @RestController
 @RequestMapping("/hospital/owner")
 public class OwnerController {
-	@Autowired
-	private OwnerService service;
+    @Autowired
+    private OwnerService service;
 
-	@GetMapping("/all/{hospitalId}")
-	public ResponseEntity<List<OwnerResponse>> getAllOwnersById(@PathVariable String hospitalId) {
-		return ResponseEntity.ok(service.getAllOwnersByHospitalId(hospitalId));
-	}
+    @GetMapping("/all/{hospitalId}")
+    public ResponseEntity<List<OwnerResponse>> getAllOwnersById(@PathVariable String hospitalId) {
+        return ResponseEntity.ok(service.getAllOwnersByHospitalId(hospitalId));
+    }
 
-	@GetMapping("/search/{id}")
-	public ResponseEntity<OwnerResponse> getOwnerById(@PathVariable String id) {
-		return ResponseEntity.ok(service.getOwnerById(id));
-	}
+    @GetMapping("/search/{id}")
+    public ResponseEntity<OwnerResponse> getOwnerById(@PathVariable String id) {
+        return ResponseEntity.ok(service.getOwnerById(id));
+    }
 
-	@PostMapping("/add")
-	public ResponseEntity<MessageResponse> addOwner(@RequestBody OwnerRequest request) {
-		return ResponseEntity.ok(service.addOwner(request));
-	}
+    @PostMapping("/add")
+    public ResponseEntity<MessageResponse> addOwner(@RequestBody OwnerRequest request) {
+        return ResponseEntity.ok(service.addOwner(request));
+    }
 
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<MessageResponse> deleteOwner(@PathVariable String id) {
-		return ResponseEntity.ok(service.removeOwnerById(id));
-	}
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<MessageResponse> deleteOwner(@PathVariable String id) {
+        return ResponseEntity.ok(service.removeOwnerById(id));
+    }
 }

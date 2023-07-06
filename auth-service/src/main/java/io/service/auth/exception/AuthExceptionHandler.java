@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import java.time.LocalDateTime;
+
 @RestControllerAdvice
 public class AuthExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(UserAlreadyExistException.class)
@@ -23,5 +25,22 @@ public class AuthExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorInfo errorInfo = new ErrorInfo(ex.getMessage(),
                 request.getDescription(true));
         return new ResponseEntity<>(errorInfo, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(AuthenticationTokenExpiredException.class)
+    public ResponseEntity<ErrorInfo> handleAuthenticationTokenExpiredException(AuthenticationTokenExpiredException ex,
+                                                                               WebRequest request) {
+        ErrorInfo errorInfo = new ErrorInfo(ex.getMessage(),
+                request.getDescription(true));
+        return new ResponseEntity<>(errorInfo, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(InvalidTokenException.class)
+    public ResponseEntity<ErrorInfo> handleInvalidTokenException
+            (InvalidTokenException exception, WebRequest request) {
+        ErrorInfo errorMessage = new ErrorInfo(LocalDateTime.now(), exception.getMessage(),
+                request.getDescription(true));
+
+        return new ResponseEntity<>(errorMessage, HttpStatus.UNAUTHORIZED);
     }
 }

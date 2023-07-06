@@ -11,7 +11,7 @@ import lombok.ToString;
 @NoArgsConstructor
 public class MessageResponse extends Response {
 
-	public MessageResponse(String message, String status) {
-		super(message, status);
-	}
+    public MessageResponse(String message, String status) {
+        super(message, status);
+    }
 }

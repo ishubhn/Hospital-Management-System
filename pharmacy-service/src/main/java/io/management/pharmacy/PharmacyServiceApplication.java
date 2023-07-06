@@ -10,8 +10,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients
 public class PharmacyServiceApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(PharmacyServiceApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(PharmacyServiceApplication.class, args);
+    }
 
 }

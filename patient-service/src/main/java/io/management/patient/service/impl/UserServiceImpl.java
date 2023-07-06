@@ -6,7 +6,6 @@ import io.management.patient.entity.dto.mapper.PatientMapper;
 import io.management.patient.entity.dto.request.PatientRequest;
 import io.management.patient.entity.dto.response.MessageResponse;
 import io.management.patient.entity.dto.response.PatientResponse;
-import io.management.patient.entity.external.Hospital;
 import io.management.patient.exception.UserAlreadyPresentException;
 import io.management.patient.exception.UserNotFoundException;
 import io.management.patient.repository.PatientEntityRepository;
@@ -14,10 +13,8 @@ import io.management.patient.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -45,7 +42,7 @@ public class UserServiceImpl implements UserService {
             addressEntity.setAddressId(addressUuid);
             userRepo.save(userEntity);
 
-            log.info("User %s created successfully", user.getEmailId());
+            log.info("User {} created successfully", user.getEmailId());
             return toPatientResponse(PatientMapper.toPatientRequest(user));
         }
     }

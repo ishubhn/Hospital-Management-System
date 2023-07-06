@@ -15,27 +15,27 @@ import java.util.List;
 @RequestMapping("/hospital")
 public class HospitalController {
 
-	@Autowired
-	private HospitalService hospitalService;
+    @Autowired
+    private HospitalService hospitalService;
 
-	@GetMapping("/search/all")
-	public ResponseEntity<List<HospitalResponse>> getAllHospitals() {
-		return ResponseEntity.ok(hospitalService.getAllHospitals());
-	}
+    @GetMapping("/search/all")
+    public ResponseEntity<List<HospitalResponse>> getAllHospitals() {
+        return ResponseEntity.ok(hospitalService.getAllHospitals());
+    }
 
-	@GetMapping("/search/{emailId}")
-	public ResponseEntity<HospitalResponse> getHospitalByEmailId(@PathVariable String emailId) {
-		return ResponseEntity.ok(hospitalService.getHospitalByEmailId(emailId));
-	}
+    @GetMapping("/search/{emailId}")
+    public ResponseEntity<HospitalResponse> getHospitalByEmailId(@PathVariable String emailId) {
+        return ResponseEntity.ok(hospitalService.getHospitalByEmailId(emailId));
+    }
 
-	@PostMapping("/add")
-	public ResponseEntity<MessageResponse> createHospital(@RequestBody HospitalRequest request)
-			throws HospitalAlreadyPresentException {
-		return ResponseEntity.ok(hospitalService.createHospital(request));
-	}
+    @PostMapping("/add")
+    public ResponseEntity<MessageResponse> createHospital(@RequestBody HospitalRequest request)
+            throws HospitalAlreadyPresentException {
+        return ResponseEntity.ok(hospitalService.createHospital(request));
+    }
 
-	@DeleteMapping("/delete/{emailId}")
-	public ResponseEntity<MessageResponse> deleteHospitalByEmailId(@PathVariable String emailId) {
-		return ResponseEntity.ok(hospitalService.deleteHospitalByEmailId(emailId));
-	}
+    @DeleteMapping("/delete/{emailId}")
+    public ResponseEntity<MessageResponse> deleteHospitalByEmailId(@PathVariable String emailId) {
+        return ResponseEntity.ok(hospitalService.deleteHospitalByEmailId(emailId));
+    }
 }

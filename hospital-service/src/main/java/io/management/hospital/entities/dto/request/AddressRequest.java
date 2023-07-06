@@ -8,8 +8,8 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AddressRequest {
-	private String address;
-	private String city;
-	private String state;
-	private String pinCode;
+    private String address;
+    private String city;
+    private String state;
+    private String pinCode;
 }

@@ -12,13 +12,13 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 public class Response {
-	private LocalDateTime timestamp;
-	private String message;
-	private String status;
+    private LocalDateTime timestamp;
+    private String message;
+    private String status;
 
-	public Response(String message, String status) {
-		this.timestamp = LocalDateTime.now();
-		this.message = message;
-		this.status = status;
-	}
+    public Response(String message, String status) {
+        this.timestamp = LocalDateTime.now();
+        this.message = message;
+        this.status = status;
+    }
 }

@@ -10,6 +10,7 @@ import io.service.auth.repository.UserRepository;
 import io.service.auth.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -56,5 +57,16 @@ public class AuthServiceImpl implements AuthService {
 
         // return token
         return new LoginResponse(jwtUtil.generateToken(user));
+    }
+
+    @Override
+    public User getUserFromUsername(String emailId) {
+        User user = userRepo.findByEmailId(emailId);
+
+        if (user != null) {
+            return user;
+        } else {
+            throw new UsernameNotFoundException(String.format("User not found for login id -> %s", emailId));
+        }
     }
 }

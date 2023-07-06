@@ -22,85 +22,85 @@ import static io.management.hospital.entities.dto.mapper.OwnerMapper.toOwnerEnti
 @Service
 public class OwnerServiceImpl implements OwnerService {
 
-	@Autowired
-	private OwnerEntityRepository repo;
+    @Autowired
+    private OwnerEntityRepository repo;
 
-	private String status = "SUCCESS";
+    private String status = "SUCCESS";
 
-	@Override
-	public MessageResponse addOwner(OwnerRequest request) throws NullPointerException{
-		MessageResponse message;
+    @Override
+    public MessageResponse addOwner(OwnerRequest request) throws NullPointerException {
+        MessageResponse message;
 
-		if (request != null) {
-			// ID Generation
-			String ownerId = UUID.randomUUID().toString();
-			OwnerEntity ownerEntity = toOwnerEntity(request);
-			ownerEntity.setOwnerId(ownerId);
+        if (request != null) {
+            // ID Generation
+            String ownerId = UUID.randomUUID().toString();
+            OwnerEntity ownerEntity = toOwnerEntity(request);
+            ownerEntity.setOwnerId(ownerId);
 
-			repo.save(ownerEntity);
+            repo.save(ownerEntity);
 
-			message = new MessageResponse(String.format("Owner created successfully -> %s", request.getEmailId()),
-					status);
-		} else {
-			message = new MessageResponse("An error occurred while creating new Owner Entity", "ERROR");
-		}
-		return message;
-	}
+            message = new MessageResponse(String.format("Owner created successfully -> %s", request.getEmailId()),
+                    status);
+        } else {
+            message = new MessageResponse("An error occurred while creating new Owner Entity", "ERROR");
+        }
+        return message;
+    }
 
-	@Override
-	public List<OwnerResponse> getAllOwnersByHospitalId(String hospitalId) {
-		return repo.findAllByHospitalOwnedId(hospitalId)
-				.stream()
-				.map(OwnerMapper::toOwnerResponse)
-				.collect(Collectors.toList());
-	}
+    @Override
+    public List<OwnerResponse> getAllOwnersByHospitalId(String hospitalId) {
+        return repo.findAllByHospitalOwnedId(hospitalId)
+                .stream()
+                .map(OwnerMapper::toOwnerResponse)
+                .collect(Collectors.toList());
+    }
 
-	@Override
-	public OwnerResponse getOwnerById(String id) {
-		return repo.findById(id)
-				.stream()
-				.findFirst()
-				.map(OwnerMapper::toOwnerResponse)
-				.orElseThrow(() ->
-						new NoSuchOwnerEntityException(String.format("No such owner exist with id -> %s", id)));
-	}
+    @Override
+    public OwnerResponse getOwnerById(String id) {
+        return repo.findById(id)
+                .stream()
+                .findFirst()
+                .map(OwnerMapper::toOwnerResponse)
+                .orElseThrow(() ->
+                        new NoSuchOwnerEntityException(String.format("No such owner exist with id -> %s", id)));
+    }
 
-	@Override
-	public MessageResponse assignHospitalToOwner(String ownerId, String hospitalId) throws NullPointerException {
-		Optional<OwnerEntity> entity = repo.findById(ownerId);
-		Set<String> hospitalsId = null;
-		MessageResponse response = null;
+    @Override
+    public MessageResponse assignHospitalToOwner(String ownerId, String hospitalId) throws NullPointerException {
+        Optional<OwnerEntity> entity = repo.findById(ownerId);
+        Set<String> hospitalsId = null;
+        MessageResponse response = null;
 
-		if (!entity.isEmpty()) {
-			hospitalsId.add(hospitalId);
-			entity.get().setHospitalOwnedId(hospitalsId);
-			response = new MessageResponse(
-					String.format("Hospital -> %s added successfully for owner -> %s", hospitalId, ownerId),
-					status);
-		}
+        if (!entity.isEmpty()) {
+            hospitalsId.add(hospitalId);
+            entity.get().setHospitalOwnedId(hospitalsId);
+            response = new MessageResponse(
+                    String.format("Hospital -> %s added successfully for owner -> %s", hospitalId, ownerId),
+                    status);
+        }
 
-		return response;
-	}
+        return response;
+    }
 
-	@Override
-	public MessageResponse removeOwnerById(String id) {
+    @Override
+    public MessageResponse removeOwnerById(String id) {
 
-		MessageResponse messageResponse;
+        MessageResponse messageResponse;
 
-		if (ifOwnerExist(id)) {
-			repo.deleteById(id);
-			messageResponse = new MessageResponse(String.format("Owner entity deleted" +
-					"successfully -> ", id), status);
-		} else {
-			throw new NoSuchOwnerEntityException(
-					String.format("No such owner entity exist with id -> %s", id));
-		}
+        if (ifOwnerExist(id)) {
+            repo.deleteById(id);
+            messageResponse = new MessageResponse(String.format("Owner entity deleted" +
+                    "successfully -> ", id), status);
+        } else {
+            throw new NoSuchOwnerEntityException(
+                    String.format("No such owner entity exist with id -> %s", id));
+        }
 
-		return messageResponse;
-	}
+        return messageResponse;
+    }
 
-	public boolean ifOwnerExist(String id) {
-		Optional<OwnerEntity> ownerEntity = repo.findById(id);
-		return !ownerEntity.isEmpty();
-	}
+    public boolean ifOwnerExist(String id) {
+        Optional<OwnerEntity> ownerEntity = repo.findById(id);
+        return !ownerEntity.isEmpty();
+    }
 }

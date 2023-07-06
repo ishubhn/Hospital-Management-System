@@ -8,6 +8,6 @@ import io.service.auth.exception.UserAlreadyExistException;
 
 public interface AuthService {
     User registerUser(RegisterRequest request) throws UserAlreadyExistException;
-
     LoginResponse loginUser(LoginRequest request);
+    User getUserFromUsername(String emailId);
 }

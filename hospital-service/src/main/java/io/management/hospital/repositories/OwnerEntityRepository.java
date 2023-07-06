@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface OwnerEntityRepository extends JpaRepository<OwnerEntity, String> {
-	List<OwnerEntity> findAllByHospitalOwnedId(String hospitalId);
+    List<OwnerEntity> findAllByHospitalOwnedId(String hospitalId);
 }

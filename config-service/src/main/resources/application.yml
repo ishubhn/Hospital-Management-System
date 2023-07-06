@@ -3,13 +3,14 @@ server:
 
 spring:
   application:
-    name: Config-Service
+    name: CONFIG-SERVICE
   cloud:
     config:
       server:
         git:
           uri: https://github.com/ishubhn/hospital-management-external-config
           clone-on-start: true
+          basedir: /temp/HMS-config
 
 eureka:
   instance:

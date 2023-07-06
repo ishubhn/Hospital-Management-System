@@ -10,8 +10,8 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients
 public class HospitalApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(HospitalApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(HospitalApplication.class, args);
+    }
 
 }

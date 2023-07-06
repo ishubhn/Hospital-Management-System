@@ -8,6 +8,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class PatientMapper {
 
+    private PatientMapper() {
+    }
+
     public static PatientResponse toPatientResponse(PatientEntity user) {
         return new PatientResponse(user.getUserId(), user.getFirstName(), user.getLastName(),
                 user.getGender(), user.getContactNumber(), user.getEmailId(),
@@ -18,8 +21,5 @@ public class PatientMapper {
         return new PatientEntity(user.getFirstName(), user.getLastName(), user.getEmailId(), user.getPassword(),
                 user.getContactNumber(), user.getGender(), user.getDateOfBirth(),
                 user.getAddress());
-    }
-
-    private PatientMapper() {
     }
 }

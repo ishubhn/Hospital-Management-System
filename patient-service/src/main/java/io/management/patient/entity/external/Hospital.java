@@ -10,10 +10,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Hospital {
-	private String hospitalId;
-	private String name;
-	private Address address;
-	private String contactNumber;
-	private String alternateContactNumber;
-	private String emailId;
+    private String hospitalId;
+    private String name;
+    private Address address;
+    private String contactNumber;
+    private String alternateContactNumber;
+    private String emailId;
 }

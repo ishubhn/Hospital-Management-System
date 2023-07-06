@@ -10,8 +10,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UpdateRatingRequest {
-	int ratings;
-	String feedback;
-	String ratingId;
-	String userId;
+    int ratings;
+    String feedback;
+    String ratingId;
+    String userId;
 }

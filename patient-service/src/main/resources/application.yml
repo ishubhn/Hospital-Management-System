@@ -1,6 +1,11 @@
 server:
   port: 8081
 
+# log files
+logging:
+  file:
+    name: C:/Temp/Logs/HMS/patient.log
+
 spring:
   devtools:
     add-properties: 'true'
@@ -9,8 +14,14 @@ spring:
     username: root
     password: root
   application:
-    name: Patient-Service
+    name: PATIENT-SERVICE
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
+  data:
+    jdbc:
+      repositories:
+        enabled: false  # Due to Multiple JPA Repositories
+  config:
+    import: optional:configserver:http://localhost:8902

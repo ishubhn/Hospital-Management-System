@@ -15,11 +15,11 @@ import java.util.List;
 @RequestMapping("/hospital")
 public class AddressController {
 
-	@Autowired
-	private AddressService service;
+    @Autowired
+    private AddressService service;
 
-	@GetMapping("/location/{pincode}")
-	public ResponseEntity<List<HospitalResponse>> getHospitalsByPinCode(@PathVariable String pincode) {
-		return ResponseEntity.ok(service.getHospitalsByPincode(pincode));
-	}
+    @GetMapping("/location/{pincode}")
+    public ResponseEntity<List<HospitalResponse>> getHospitalsByPinCode(@PathVariable String pincode) {
+        return ResponseEntity.ok(service.getHospitalsByPincode(pincode));
+    }
 }

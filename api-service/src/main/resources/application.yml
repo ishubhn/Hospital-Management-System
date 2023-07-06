@@ -3,21 +3,21 @@ server:
 
 spring:
   application:
-    name: API-Gateway
+    name: API-GATEWAY
   cloud:
     gateway:
       routes:
-        - id : HOSPITAL-SERVICE
+        - id: HOSPITAL-SERVICE
           uri: lb://HOSPITAL-SERVICE
           predicates:
             - Path=/hospital/**
 
-        - id : PATIENT-SERVICE
+        - id: PATIENT-SERVICE
           uri: lb://PATIENT-SERVICE
           predicates:
             - Path=/users/**
 
-        - id : PHARMACY-SERVICE
+        - id: PHARMACY-SERVICE
           uri: lb://PHARMACY-SERVICE
           predicates:
             - Path=/pharmacy/**
@@ -26,3 +26,8 @@ spring:
           uri: lb://FEEDBACK-SERVICE
           predicates:
             - Path=/ratings/**
+
+        - id: AUTHENTICATION-SERVICE
+          uri: lb://AUTHENTICATION-SERVICE
+          predicates:
+            - Path=/v1/auth/**

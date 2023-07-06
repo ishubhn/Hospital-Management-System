@@ -10,9 +10,9 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OwnerRequest {
-	private String firstName;
-	private String lastName;
-	private String contactNumber;
-	private String emailId;
-	private Set<String> hospitalOwnedId;
+    private String firstName;
+    private String lastName;
+    private String contactNumber;
+    private String emailId;
+    private Set<String> hospitalOwnedId;
 }

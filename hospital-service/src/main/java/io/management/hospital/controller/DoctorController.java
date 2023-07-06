@@ -20,122 +20,122 @@ import java.util.List;
 @RestController
 @RequestMapping("/hospital/doctor")
 public class DoctorController {
-	@Autowired
-	private DoctorService doctorService;
+    @Autowired
+    private DoctorService doctorService;
 
-	@GetMapping("/search/all")
-	@CircuitBreaker(name = "ratingDoctorBreakerAll", fallbackMethod = "ratingDoctorFallbackAll")
-	@Retry(name = "ratingDoctorRetryAll")
-	@RateLimiter(name = "ratingDoctorLimit")
-	public ResponseEntity<List<DoctorResponse>> getAllDoctors() {
-		log.info("Calling all users");
-		return ResponseEntity.ok(doctorService.getAllDoctors());
-	}
+    @GetMapping("/search/all")
+    @CircuitBreaker(name = "ratingDoctorBreakerAll", fallbackMethod = "ratingDoctorFallbackAll")
+    @Retry(name = "ratingDoctorRetryAll")
+    @RateLimiter(name = "ratingDoctorLimit")
+    public ResponseEntity<List<DoctorResponse>> getAllDoctors() {
+        log.info("Calling all users");
+        return ResponseEntity.ok(doctorService.getAllDoctors());
+    }
 
-	// Fallback Method
-	// Fallback Method must have same return type and params
-	public ResponseEntity<List<DoctorResponse>> ratingDoctorFallbackAll(Exception ex) {
-		log.warn("Retry attempt exhausted");
-		log.error("Fallback is executed for getAllDoctors as the service is down!");
-		log.error("Fallback Error Details : {}", ex.getMessage());
+    // Fallback Method
+    // Fallback Method must have same return type and params
+    public ResponseEntity<List<DoctorResponse>> ratingDoctorFallbackAll(Exception ex) {
+        log.warn("Retry attempt exhausted");
+        log.error("Fallback is executed for getAllDoctors as the service is down!");
+        log.error("Fallback Error Details : {}", ex.getMessage());
 
-		DoctorResponse response = DoctorResponse
-									.builder()
-									.about("Dummy user is created because some service is down!")
-									.build();
+        DoctorResponse response = DoctorResponse
+                .builder()
+                .about("Dummy user is created because some service is down!")
+                .build();
 
-		// Collections.singletonList(T t) -> returns immutable list with single element
-		return new ResponseEntity(Collections.singletonList(response), HttpStatus.BAD_GATEWAY);
-	}
+        // Collections.singletonList(T t) -> returns immutable list with single element
+        return new ResponseEntity(Collections.singletonList(response), HttpStatus.BAD_GATEWAY);
+    }
 
-	@GetMapping("/search/id/{id}")
-	@CircuitBreaker(name = "ratingDoctorBreakerById", fallbackMethod = "ratingDoctorFallbackId")
-	@Retry(name = "ratingDoctorRetryById")
-	@RateLimiter(name = "ratingDoctorLimit")
-	public ResponseEntity<DoctorResponse> getDoctorDetailsById(@PathVariable String id) {
-		log.info("Calling getDoctorDetailsById for user: {}", id);
-		return ResponseEntity.ok(doctorService.getDoctorById(id));
-	}
+    @GetMapping("/search/id/{id}")
+    @CircuitBreaker(name = "ratingDoctorBreakerById", fallbackMethod = "ratingDoctorFallbackId")
+    @Retry(name = "ratingDoctorRetryById")
+    @RateLimiter(name = "ratingDoctorLimit")
+    public ResponseEntity<DoctorResponse> getDoctorDetailsById(@PathVariable String id) {
+        log.info("Calling getDoctorDetailsById for user: {}", id);
+        return ResponseEntity.ok(doctorService.getDoctorById(id));
+    }
 
-	// Fallback Method
-	public ResponseEntity<DoctorResponse> ratingDoctorFallbackId(String id, Exception ex) {
-		log.warn("Retry attempt exhausted");
-		log.error("Fallback is executed for getDoctorDetailsById as the service is down!");
-		log.error("Fallback Error Details : {}", ex.getMessage());
+    // Fallback Method
+    public ResponseEntity<DoctorResponse> ratingDoctorFallbackId(String id, Exception ex) {
+        log.warn("Retry attempt exhausted");
+        log.error("Fallback is executed for getDoctorDetailsById as the service is down!");
+        log.error("Fallback Error Details : {}", ex.getMessage());
 
-		DoctorResponse user = new DoctorResponse(id, "Dummy user is created because some service is down!");
-		
-		return new ResponseEntity<>(user, HttpStatus.BAD_GATEWAY);
-	}
+        DoctorResponse user = new DoctorResponse(id, "Dummy user is created because some service is down!");
 
-	@GetMapping("/search/email/{emailId}")
-	@CircuitBreaker(name = "ratingDoctorBreakerByEmail", fallbackMethod = "ratingDoctorFallbackEmail")
-	@Retry(name = "ratingDoctorRetryByEmail")
-	@RateLimiter(name = "ratingDoctorLimit")
-	public ResponseEntity<DoctorResponse> getDoctorDetailsByEmail(@PathVariable String emailId) {
-		log.info("Calling getDoctorDetailsByEmail for user: {}", emailId);
-		return ResponseEntity.ok(doctorService.getDoctorByEmailId(emailId));
-	}
+        return new ResponseEntity<>(user, HttpStatus.BAD_GATEWAY);
+    }
 
-	public ResponseEntity<DoctorResponse> ratingDoctorFallbackEmail(String emailId, Exception ex) {
-		log.warn("Retry attempt exhausted");
-		log.error("Fallback is executed for getDoctorDetailsByEmail as the service is down!");
-		log.error("Fallback Error Details : {}", ex.getMessage());
+    @GetMapping("/search/email/{emailId}")
+    @CircuitBreaker(name = "ratingDoctorBreakerByEmail", fallbackMethod = "ratingDoctorFallbackEmail")
+    @Retry(name = "ratingDoctorRetryByEmail")
+    @RateLimiter(name = "ratingDoctorLimit")
+    public ResponseEntity<DoctorResponse> getDoctorDetailsByEmail(@PathVariable String emailId) {
+        log.info("Calling getDoctorDetailsByEmail for user: {}", emailId);
+        return ResponseEntity.ok(doctorService.getDoctorByEmailId(emailId));
+    }
 
-		DoctorResponse user = new DoctorResponse(emailId, "Dummy user is created because some service is down!");
+    public ResponseEntity<DoctorResponse> ratingDoctorFallbackEmail(String emailId, Exception ex) {
+        log.warn("Retry attempt exhausted");
+        log.error("Fallback is executed for getDoctorDetailsByEmail as the service is down!");
+        log.error("Fallback Error Details : {}", ex.getMessage());
 
-		return new ResponseEntity<>(user, HttpStatus.BAD_GATEWAY);
-	}
+        DoctorResponse user = new DoctorResponse(emailId, "Dummy user is created because some service is down!");
 
-	@GetMapping("/search/name")
-	@CircuitBreaker(name = "ratingDoctorBreakerByEitherName", fallbackMethod = "ratingDoctorFallbackEitherName")
-	@Retry(name = "ratingDoctorRetryByEitherName")
-	@RateLimiter(name = "ratingDoctorLimit")
-	public ResponseEntity<List<DoctorResponse>> getDoctorDetailsByEitherName
-			(@RequestParam String firstName, @RequestParam String lastName) {
-		log.info("Calling getDoctorDetailsByEitherName for user: firstname - {} or lastname - {}", firstName, lastName);
-		return ResponseEntity.ok(doctorService.getDoctorsLikeName(firstName, lastName));
-	}
+        return new ResponseEntity<>(user, HttpStatus.BAD_GATEWAY);
+    }
 
-	public ResponseEntity<List<DoctorResponse>> ratingDoctorFallbackEitherName(String firstName, String lastName,
-	                                                                           Exception ex) {
-		log.warn("Retry attempt exhausted");
-		log.error("Fallback is executed for getDoctorDetailsByEitherName as the service is down!");
-		log.error("Fallback Error Details : {}", ex.getMessage());
+    @GetMapping("/search/name")
+    @CircuitBreaker(name = "ratingDoctorBreakerByEitherName", fallbackMethod = "ratingDoctorFallbackEitherName")
+    @Retry(name = "ratingDoctorRetryByEitherName")
+    @RateLimiter(name = "ratingDoctorLimit")
+    public ResponseEntity<List<DoctorResponse>> getDoctorDetailsByEitherName
+            (@RequestParam String firstName, @RequestParam String lastName) {
+        log.info("Calling getDoctorDetailsByEitherName for user: firstname - {} or lastname - {}", firstName, lastName);
+        return ResponseEntity.ok(doctorService.getDoctorsLikeName(firstName, lastName));
+    }
 
-		DoctorResponse user = DoctorResponse
-								.builder()
-								.firstName(firstName)
-								.lastName(lastName)
-								.about("Dummy user is created because some service is down!").build();
+    public ResponseEntity<List<DoctorResponse>> ratingDoctorFallbackEitherName(String firstName, String lastName,
+                                                                               Exception ex) {
+        log.warn("Retry attempt exhausted");
+        log.error("Fallback is executed for getDoctorDetailsByEitherName as the service is down!");
+        log.error("Fallback Error Details : {}", ex.getMessage());
 
-		return new ResponseEntity<>( Collections.singletonList(user), HttpStatus.BAD_GATEWAY);
-	}
+        DoctorResponse user = DoctorResponse
+                .builder()
+                .firstName(firstName)
+                .lastName(lastName)
+                .about("Dummy user is created because some service is down!").build();
 
-	@PostMapping("/add")
-	public ResponseEntity<MessageResponse> addDoctor(@RequestBody DoctorRequest doctorRequest) {
-		return new ResponseEntity<>(doctorService.createDoctor(doctorRequest), HttpStatus.CREATED);
-	}
+        return new ResponseEntity<>(Collections.singletonList(user), HttpStatus.BAD_GATEWAY);
+    }
 
-	@PostMapping("/add/{doctorId}/{hospitalId}")
-	public ResponseEntity<MessageResponse> enrollDoctorToHospital(@PathVariable String doctorId,
-	                                                              @PathVariable String addressId) {
-		log.info("Calling enrollDoctorToHospital for user: doctorId - {} or addressId - {}", doctorId, addressId);
-		return new ResponseEntity<>(doctorService.enrollDoctorToHospital(doctorId, addressId),
-				HttpStatus.ACCEPTED);
-	}
+    @PostMapping("/add")
+    public ResponseEntity<MessageResponse> addDoctor(@RequestBody DoctorRequest doctorRequest) {
+        return new ResponseEntity<>(doctorService.createDoctor(doctorRequest), HttpStatus.CREATED);
+    }
 
-	@PostMapping("/add/doctor/qual")
-	public ResponseEntity<MessageResponse> addDoctorQualification(@RequestParam String doctorId,
-	                                                              @RequestParam String degree,
-	                                                              @RequestParam String specializationField) {
-		return new ResponseEntity<>(doctorService.addDoctorQualification(doctorId, degree, specializationField),
-				HttpStatus.ACCEPTED);
-	}
+    @PostMapping("/add/{doctorId}/{hospitalId}")
+    public ResponseEntity<MessageResponse> enrollDoctorToHospital(@PathVariable String doctorId,
+                                                                  @PathVariable String addressId) {
+        log.info("Calling enrollDoctorToHospital for user: doctorId - {} or addressId - {}", doctorId, addressId);
+        return new ResponseEntity<>(doctorService.enrollDoctorToHospital(doctorId, addressId),
+                HttpStatus.ACCEPTED);
+    }
 
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<MessageResponse> deleteDoctorById(@PathVariable String id) {
-		return new ResponseEntity<>(doctorService.deleteDoctor(id), HttpStatus.OK);
-	}
+    @PostMapping("/add/doctor/qual")
+    public ResponseEntity<MessageResponse> addDoctorQualification(@RequestParam String doctorId,
+                                                                  @RequestParam String degree,
+                                                                  @RequestParam String specializationField) {
+        return new ResponseEntity<>(doctorService.addDoctorQualification(doctorId, degree, specializationField),
+                HttpStatus.ACCEPTED);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<MessageResponse> deleteDoctorById(@PathVariable String id) {
+        return new ResponseEntity<>(doctorService.deleteDoctor(id), HttpStatus.OK);
+    }
 
 }

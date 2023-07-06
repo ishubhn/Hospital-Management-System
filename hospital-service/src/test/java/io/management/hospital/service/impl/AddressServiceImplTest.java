@@ -29,9 +29,9 @@ public class AddressServiceImplTest {
         String pincode = "123456";
         // Mocking the repo
         List<HospitalEntity> hospitals = new ArrayList<>();
-        hospitals.add(new HospitalEntity("123","Hospital 1", new AddressEntity("1", "123 Main St", "City1", "State1", "123456", "Country1"), "1234567890", "9876543210",
+        hospitals.add(new HospitalEntity("123", "Hospital 1", new AddressEntity("1", "123 Main St", "City1", "State1", "123456", "Country1"), "1234567890", "9876543210",
                 "hospital1@example.com", "password1"));
-        hospitals.add(new HospitalEntity("456","Hospital 2", new AddressEntity("1", "123 Main St", "City1", "State1", "123456", "Country1"), "0987654321", "0123456789",
+        hospitals.add(new HospitalEntity("456", "Hospital 2", new AddressEntity("1", "123 Main St", "City1", "State1", "123456", "Country1"), "0987654321", "0123456789",
                 "hospital2@example.com", "password2"));
         when(repo.findByPincode("123456")).thenReturn(hospitals);
 

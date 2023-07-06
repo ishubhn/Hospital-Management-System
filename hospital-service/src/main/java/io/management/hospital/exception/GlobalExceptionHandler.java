@@ -11,54 +11,72 @@ import java.time.LocalDateTime;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-	@ExceptionHandler(HospitalAlreadyPresentException.class)
-	public ResponseEntity<ErrorMessage> handleHospitalAlreadyPresentException
-			(HospitalAlreadyPresentException exception, WebRequest request) {
+    @ExceptionHandler(HospitalAlreadyPresentException.class)
+    public ResponseEntity<ErrorMessage> handleHospitalAlreadyPresentException
+            (HospitalAlreadyPresentException exception, WebRequest request) {
 
-		ErrorMessage errorMessage = new ErrorMessage(LocalDateTime.now(), exception.getMessage(),
-				request.getDescription(true));
+        ErrorMessage errorMessage = new ErrorMessage(LocalDateTime.now(), exception.getMessage(),
+                request.getDescription(true));
 
-		return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
-	}
+        return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
+    }
 
-	@ExceptionHandler(NoSuchHospitalExistException.class)
-	public ResponseEntity<ErrorMessage> handleNoSuchHospitalExistException
-			(HospitalAlreadyPresentException exception, WebRequest request) {
+    @ExceptionHandler(NoSuchHospitalExistException.class)
+    public ResponseEntity<ErrorMessage> handleNoSuchHospitalExistException
+            (HospitalAlreadyPresentException exception, WebRequest request) {
 
-		ErrorMessage errorMessage = new ErrorMessage(LocalDateTime.now(), exception.getMessage(),
-				request.getDescription(true));
+        ErrorMessage errorMessage = new ErrorMessage(LocalDateTime.now(), exception.getMessage(),
+                request.getDescription(true));
 
-		return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
-	}
+        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+    }
 
-	@ExceptionHandler(NoSuchDoctorEntityException.class)
-	public ResponseEntity<ErrorMessage> handleNoSuchDoctorEntityException
-			(NoSuchDoctorEntityException exception, WebRequest request) {
+    @ExceptionHandler(NoSuchDoctorEntityException.class)
+    public ResponseEntity<ErrorMessage> handleNoSuchDoctorEntityException
+            (NoSuchDoctorEntityException exception, WebRequest request) {
 
-		ErrorMessage errorMessage = new ErrorMessage(LocalDateTime.now(), exception.getMessage(),
-				request.getDescription(true));
+        ErrorMessage errorMessage = new ErrorMessage(LocalDateTime.now(), exception.getMessage(),
+                request.getDescription(true));
 
-		return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
-	}
+        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+    }
 
-	@ExceptionHandler(NoSuchOwnerEntityException.class)
-	public ResponseEntity<ErrorMessage> handleNoSuchOwnerEntityException
-			(NoSuchOwnerEntityException exception, WebRequest request) {
+    @ExceptionHandler(NoSuchOwnerEntityException.class)
+    public ResponseEntity<ErrorMessage> handleNoSuchOwnerEntityException
+            (NoSuchOwnerEntityException exception, WebRequest request) {
 
-		ErrorMessage errorMessage = new ErrorMessage(LocalDateTime.now(), exception.getMessage(),
-				request.getDescription(true));
+        ErrorMessage errorMessage = new ErrorMessage(LocalDateTime.now(), exception.getMessage(),
+                request.getDescription(true));
 
-		return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
-	}
+        return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+    }
 
-	// Exception to handle Feign Exception
-	@ExceptionHandler(FeignException.class)
-	public ResponseEntity<ErrorMessage> handleFeignException
-			(FeignException exception, WebRequest request) {
+    // Exception to handle Feign Exception
+    @ExceptionHandler(FeignException.class)
+    public ResponseEntity<ErrorMessage> handleFeignException
+    (FeignException exception, WebRequest request) {
 
-		ErrorMessage errorMessage = new ErrorMessage(LocalDateTime.now(), exception.getMessage(),
-				request.getDescription(true));
+        ErrorMessage errorMessage = new ErrorMessage(LocalDateTime.now(), exception.getMessage(),
+                request.getDescription(true));
 
-		return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
-	}
+        return new ResponseEntity<>(errorMessage, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(InvalidAuthorizationTokenException.class)
+    public ResponseEntity<ErrorMessage> handleInvalidAuthorizationTokenException
+            (InvalidAuthorizationTokenException exception, WebRequest request) {
+        ErrorMessage errorMessage = new ErrorMessage(LocalDateTime.now(), exception.getMessage(),
+                request.getDescription(true));
+
+        return new ResponseEntity<>(errorMessage, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(ExpiredTokenException.class)
+    public ResponseEntity<ErrorMessage> handleExpiredTokenException
+            (ExpiredTokenException exception, WebRequest request) {
+        ErrorMessage errorMessage = new ErrorMessage(LocalDateTime.now(), exception.getMessage(),
+                request.getDescription(true));
+
+        return new ResponseEntity<>(errorMessage, HttpStatus.UNAUTHORIZED);
+    }
 }

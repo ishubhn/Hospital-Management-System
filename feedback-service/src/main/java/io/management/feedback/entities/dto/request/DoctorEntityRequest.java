@@ -8,8 +8,8 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class DoctorEntityRequest {
-	private String doctorId;
-	private String userId;  // one who gave the rating
-	private int ratings;
-	private String feedback;
+    private String doctorId;
+    private String userId;  // one who gave the rating
+    private int ratings;
+    private String feedback;
 }

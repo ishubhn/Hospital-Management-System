@@ -10,13 +10,13 @@ import java.util.Set;
 
 @Repository
 public interface MedicineEntityRepository extends JpaRepository<MedicineEntity, String> {
-	Set<MedicineEntity> findByNameContaining(String name);
+    Set<MedicineEntity> findByNameContaining(String name);
 
-	//	select medicine_content_key, medicine_entity_medicine_id from medicine_entity_medicine_content
+    //	select medicine_content_key, medicine_entity_medicine_id from medicine_entity_medicine_content
 //	where medicine_content_key = 'hajmolite'
-	@Query(value = "SELECT * FROM medicine_entity_medicine_content me JOIN medicine m ON" +
-			" me.medicine_entity_medicine_id=m.medicine_id WHERE me.medicine_content_key" +
-			" = :composition",
-			nativeQuery = true)
-	List<MedicineEntity> findByMedicineContent(String composition);
+    @Query(value = "SELECT * FROM medicine_entity_medicine_content me JOIN medicine m ON" +
+            " me.medicine_entity_medicine_id=m.medicine_id WHERE me.medicine_content_key" +
+            " = :composition",
+            nativeQuery = true)
+    List<MedicineEntity> findByMedicineContent(String composition);
 }
