@@ -22,6 +22,7 @@ spring:
   config:
     import: optional:configserver:http://localhost:8902
 
+# Circuit breaker configurations
 management:
   health:
     circuitbreakers:

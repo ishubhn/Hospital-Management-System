@@ -23,6 +23,7 @@ import java.util.Set;
 public class MedicineController {
 
     int retry = 1;
+
     @Autowired
     private MedicineService service;
 
