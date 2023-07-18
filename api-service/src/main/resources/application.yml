@@ -31,3 +31,13 @@ spring:
           uri: lb://AUTHENTICATION-SERVICE
           predicates:
             - Path=/v1/auth/**
+
+
+# Okta configurations for api gateway
+okta:
+  oauth2:
+    issuer: https://dev-50075498.okta.com/oauth2/default
+    audience: api://default
+    client-id: 0oaacs7sh9J30s9aD5d7
+    client-secret: pbwlwyimThN1RhKckHSRfvTKIjws-8sAIfq_MJRS
+    scopes: openid, profile, email, address, phone, offline_access
